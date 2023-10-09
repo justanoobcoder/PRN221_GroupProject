@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
 
 // Add dependency injections
 builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
@@ -21,6 +25,10 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 app.UseStaticFiles();
+
+app.UseRequestLocalization("vi-VN");
+
+app.UseSession();
 
 app.UseRouting();
 
