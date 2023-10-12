@@ -16,6 +16,9 @@ public class CustomerRepository : ICustomerRepository
 
     public Customer? GetByPhone(string phone) => CustomerDAO.Instance.GetByPhone(phone);
 
+    public Customer? GetByPhoneAndPassword(string phone, string password) 
+        => CustomerDAO.Instance.GetByPhoneAndPassword(phone, password);
+
     public Customer? GetByEmail(string email) => CustomerDAO.Instance.GetByEmail(email);
 
     public Customer Create(Customer customer) => CustomerDAO.Instance.Create(customer);

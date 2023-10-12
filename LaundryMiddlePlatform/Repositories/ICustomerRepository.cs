@@ -12,6 +12,7 @@ public interface ICustomerRepository
     IQueryable<Customer> GetAll();
     Customer? GetById(int id);
     Customer? GetByPhone(string phone);
+    Customer? GetByPhoneAndPassword(string phone, string password);
     Customer? GetByEmail(string email);
     Customer Create(Customer customer);
     void Update(Customer customer);

@@ -44,6 +44,20 @@ public class CustomerDAO
         return context.Customers.SingleOrDefault(c => c.Phone == phone);
     }
 
+    public Customer? GetByPhoneAndPassword(string phone, string password)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var customer = context.Customers.SingleOrDefault(c => c.Phone == phone);
+        if (customer != null)
+        {
+            if (BCrypt.Net.BCrypt.Verify(password, customer.Password))
+            {
+                return customer;
+            }
+        }
+        return null;
+    }
+
     public Customer? GetByEmail(string email)
     {
         var context = new LaundryMiddlePlatformDbContext();
@@ -53,6 +67,7 @@ public class CustomerDAO
     public Customer Create(Customer customer)
     {
         var context = new LaundryMiddlePlatformDbContext();
+        customer.Password = BCrypt.Net.BCrypt.HashPassword(customer.Password);
         context.Customers.Add(customer);
         context.SaveChanges();
         return customer;
