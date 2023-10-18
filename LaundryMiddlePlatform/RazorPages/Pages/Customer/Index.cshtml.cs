@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RazorPages.Pages.Customer
+namespace RazorPages.Pages.CustomerNamespace
 {
     public class IndexModel : PageModel
     {
