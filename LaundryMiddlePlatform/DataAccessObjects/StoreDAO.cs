@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,19 @@ public class StoreDAO
                 return _instance;
             }
         }
+    }
+
+    public Store? GetByPhoneAndPassword(string phone, string password)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var store = context.Stores.SingleOrDefault(s => s.Phone == phone);
+        if (store != null)
+        {
+            if (BCrypt.Net.BCrypt.Verify(password, store.Password))
+            {
+                return store;
+            }
+        }
+        return null;
     }
 }

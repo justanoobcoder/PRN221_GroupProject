@@ -11,7 +11,6 @@ builder.Services.AddSession(options =>
 });
 
 // Add dependency injections
-builder.Services.AddScoped<IItemTypeRepository, ItemTypeRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
