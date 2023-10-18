@@ -83,15 +83,4 @@ public class CustomerDAO
         }
         context.SaveChanges();
     }
-
-    public void Delete(int id)
-    {
-        var context = new LaundryMiddlePlatformDbContext();
-        var c = context.Customers.Find(id);
-        if (c != null)
-        {
-            c.DeletedAt = DateTime.Now;
-        }
-        context.SaveChanges();
-    }
 }

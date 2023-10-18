@@ -22,12 +22,11 @@ public class LaundryMiddlePlatformDbContext : DbContext
     }
 
     public virtual DbSet<Customer> Customers { get; set; } = null!;
-    public virtual DbSet<WashingMachine> WashingMachines { get; set; } = null!;
+    public virtual DbSet<Machine> Machines { get; set; } = null!;
     public virtual DbSet<Store> Stores { get; set; } = null!;
     public virtual DbSet<Service> Services { get; set; } = null!;
-    public virtual DbSet<ItemType> ItemTypes { get; set; } = null!;
-    public virtual DbSet<ServicePrice> ServicePrices { get; set; } = null!;
     public virtual DbSet<Order> Orders { get; set; } = null!;
+    public virtual DbSet<MachineOrderAssignment> MachineOrderAssignments { get; set; } = null!;
 
     private string GetConnectionString()
     {
@@ -40,19 +39,18 @@ public class LaundryMiddlePlatformDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //optionsBuilder.UseSqlServer("server=(local);database=LaundryMiddlePlatform;uid=sa;pwd=12345;TrustServerCertificate=True");
-        optionsBuilder.UseSqlServer(GetConnectionString());
+        optionsBuilder.UseSqlServer("server=(local);database=LaundryMiddlePlatform;uid=sa;pwd=12345;TrustServerCertificate=True");
+        //optionsBuilder.UseSqlServer(GetConnectionString());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity(CustomerTableConfiguration());
-        modelBuilder.Entity(WashingMachineTableConfiguration());
-        modelBuilder.Entity(ItemTypeTableConfiguration());
+        modelBuilder.Entity(MachineTableConfiguration());
         modelBuilder.Entity(ServiceTableConfiguration());
-        modelBuilder.Entity(ServicePriceTableConfiguration());
         modelBuilder.Entity(StoreTableConfiguration());
         modelBuilder.Entity(OrderTableConfiguration());
+        modelBuilder.Entity(MachineOrderAssignmentTableConfiguration());
     }
 
     private static Action<EntityTypeBuilder<Customer>> CustomerTableConfiguration()
@@ -108,10 +106,6 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnType("bit")
             .HasDefaultValueSql("((0))");
 
-            entity.Property(e => e.DeletedAt)
-            .HasColumnName("DeletedAt")
-            .HasColumnType("datetime");
-
             entity
             .HasMany(e => e.Orders)
             .WithOne(e => e.Customer)
@@ -119,11 +113,11 @@ public class LaundryMiddlePlatformDbContext : DbContext
         };
     }
 
-    private static Action<EntityTypeBuilder<WashingMachine>> WashingMachineTableConfiguration()
+    private static Action<EntityTypeBuilder<Machine>> MachineTableConfiguration()
     {
         return entity =>
         {
-            entity.ToTable("WashingMachine");
+            entity.ToTable("Machine");
             entity.HasKey(e => e.Id);
 
             entity.Property(e => e.Id)
@@ -149,9 +143,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasMaxLength(100)
             .IsRequired();
 
-            entity.Property(e => e.MaxWeight)
-            .HasColumnName("MaxWeight")
-            .HasColumnType("decimal(18, 2)")
+            entity.Property(e => e.Capacity)
+            .HasColumnName("Capacity")
             .IsRequired();
 
             entity.Property(e => e.IsAvailable)
@@ -159,31 +152,57 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnType("bit")
             .HasDefaultValueSql("((1))");
 
+            entity.Property(e => e.WashTimeInMinute)
+            .HasColumnName("WashTimeInMinute")
+            .IsRequired();
+
             entity.Property(e => e.StoreId)
             .HasColumnName("StoreId")
             .IsRequired();
         };
     }
 
-    private static Action<EntityTypeBuilder<ItemType>> ItemTypeTableConfiguration()
+    private static Action<EntityTypeBuilder<MachineOrderAssignment>> MachineOrderAssignmentTableConfiguration()
     {
         return entity =>
         {
-            entity.ToTable("ItemType");
+            entity.ToTable("MachineOrderAssignment");
             entity.HasKey(e => e.Id);
 
             entity.Property(e => e.Id)
             .HasColumnName("Id")
             .ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Name)
-            .HasColumnName("Name")
-            .HasMaxLength(100)
+            entity.Property(e => e.MachineId)
+            .HasColumnName("MachineId")
             .IsRequired();
 
-            entity.Property(e => e.Description)
-            .HasColumnName("Description")
-            .HasMaxLength(200);
+            entity.Property(e => e.OrderId)
+            .HasColumnName("OrderId")
+            .IsUnicode(false)
+            .HasMaxLength(20)
+            .IsRequired();
+
+            entity.Property(e => e.AssignedStartAt)
+            .HasColumnName("AssignedStartAt")
+            .HasColumnType("datetime")
+            .IsRequired();
+
+            entity.Property(e => e.AssignedEndAt)
+            .HasColumnName("AssignedEndAt")
+            .HasColumnType("datetime")
+            .IsRequired();
+
+            entity
+            .HasOne(e => e.Machine)
+            .WithMany()
+            .HasForeignKey(e => e.MachineId);
+
+            entity
+            .HasOne(e => e.Order)
+            .WithOne()
+            .HasForeignKey<MachineOrderAssignment>(e => e.OrderId)
+            .OnDelete(DeleteBehavior.NoAction);
         };
     }
 
@@ -207,23 +226,18 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnName("Description")
             .HasMaxLength(200);
 
-            entity.Property(e => e.ItemTypeId)
-            .HasColumnName("ItemTypeId")
+            entity.Property(e => e.PricePerKg)
+            .HasColumnName("PricePerKg")
+            .HasColumnType("decimal(18, 2)")
+            .IsRequired();
+
+            entity.Property(e => e.ServiceTimeInHour)
+            .HasColumnName("ServiceTimeInHour")
             .IsRequired();
 
             entity.Property(e => e.StoreId)
             .HasColumnName("StoreId")
             .IsRequired();
-
-            entity
-            .HasOne(e => e.ItemType)
-            .WithMany()
-            .HasForeignKey(e => e.ItemTypeId);
-
-            entity
-            .HasMany(e => e.ServicePrices)
-            .WithOne()
-            .HasForeignKey(e => e.ServiceId);
         };
     }
 
@@ -270,8 +284,13 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasMaxLength(200)
             .IsRequired();
 
-            entity.Property(e => e.LogoUrl)
-            .HasColumnName("LogoUrl")
+            entity.Property(e => e.AvatarUrl)
+            .HasColumnName("AvatarUrl")
+            .HasMaxLength(200)
+            .IsUnicode(false);
+
+            entity.Property(e => e.CoverUrl)
+            .HasColumnName("CoverUrl")
             .HasMaxLength(200)
             .IsUnicode(false);
 
@@ -279,11 +298,6 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnName("FacebookUrl")
             .HasMaxLength(200)
             .IsUnicode(false);
-
-            entity.Property(e => e.OwnerName)
-            .HasColumnName("OwnerName")
-            .HasMaxLength(100)
-            .IsRequired();
 
             entity.Property(e => e.OpenTime)
             .HasColumnName("OpenTime")
@@ -293,8 +307,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnName("CloseTime")
             .HasColumnType("time(0)");
 
-            entity.Property(e => e.IsOpened)
-            .HasColumnName("IsOpened")
+            entity.Property(e => e.IsOpening)
+            .HasColumnName("IsOpening")
             .HasColumnType("bit")
             .HasDefaultValueSql("((0))");
 
@@ -308,12 +322,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnType("bit")
             .HasDefaultValueSql("((0))");
 
-            entity.Property(e => e.DeletedAt)
-            .HasColumnName("DeletedAt")
-            .HasColumnType("datetime");
-
             entity
-            .HasMany(e => e.WashingMachines)
+            .HasMany(e => e.Machines)
             .WithOne()
             .HasForeignKey(e => e.StoreId);
 
@@ -321,57 +331,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasMany(e => e.Services)
             .WithOne()
             .HasForeignKey(e => e.StoreId);
-
-            entity
-            .HasMany(e => e.Orders)
-            .WithOne(e => e.Store)
-            .OnDelete(DeleteBehavior.NoAction)
-            .HasForeignKey(e => e.StoreId);
         };
     }
-
-    private static Action<EntityTypeBuilder<ServicePrice>> ServicePriceTableConfiguration()
-    {
-        return entity =>
-        {
-            entity.ToTable("ServicePrice");
-            entity.HasKey(e => e.Id);
-
-            entity.Property(e => e.Id)
-            .HasColumnName("Id")
-            .ValueGeneratedOnAdd();
-
-            entity.Property(e => e.MinWeight)
-            .HasColumnName("MinWeight")
-            .HasColumnType("decimal(18, 2)")
-            .IsRequired();
-
-            entity.Property(e => e.MaxWeight)
-            .HasColumnName("MaxWeight")
-            .HasColumnType("decimal(18, 2)")
-            .IsRequired();
-
-            entity.Property(e => e.Price)
-            .HasColumnName("Price")
-            .HasColumnType("decimal(18, 2)")
-            .IsRequired(false);
-
-            entity.Property(e => e.PricePerUnit)
-            .HasColumnName("PricePerUnit")
-            .HasColumnType("decimal(18, 2)")
-            .IsRequired(false);
-
-            entity.Property(e => e.WashTimeInMinute)
-            .HasColumnName("WashTimeInMinute")
-            .HasColumnType("int")
-            .IsRequired();
-
-            entity.Property(e => e.ServiceId)
-            .HasColumnName("ServiceId")
-            .IsRequired();
-        };
-    }
-
     private static Action<EntityTypeBuilder<Order>> OrderTableConfiguration()
     {
         return entity =>
@@ -388,8 +349,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnName("CustomerId")
             .IsRequired();
 
-            entity.Property(e => e.StoreId)
-            .HasColumnName("StoreId")
+            entity.Property(e => e.ServiceId)
+            .HasColumnName("ServiceId")
             .IsRequired();
 
             entity.Property(e => e.CreatedAt)
@@ -397,8 +358,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasColumnType("datetime")
             .HasDefaultValueSql("(getdate())");
 
-            entity.Property(e => e.FinishedAt)
-            .HasColumnName("FinishedAt")
+            entity.Property(e => e.PickUpAt)
+            .HasColumnName("PickUpAt")
             .HasColumnType("datetime")
             .IsRequired(false);
 
@@ -413,29 +374,24 @@ public class LaundryMiddlePlatformDbContext : DbContext
             .HasMaxLength(200)
             .IsRequired(false);
 
-            entity.Property(e => e.TakenAt)
-            .HasColumnName("TakenAt")
+            entity.Property(e => e.DropOffAt)
+            .HasColumnName("DropOffAt")
             .HasColumnType("datetime")
             .IsRequired(false);
 
             entity.Property(e => e.Weight)
             .HasColumnName("Weight")
-            .HasColumnType("decimal(18, 2)")
             .IsRequired();
 
-            entity.Property(e => e.TotalPrice)
-            .HasColumnName("TotalPrice")
+            entity.Property(e => e.TotalCost)
+            .HasColumnName("TotalCost")
             .HasColumnType("decimal(18, 2)")
-            .IsRequired();
-
-            entity.Property(e => e.ServicePriceId)
-            .HasColumnName("ServicePriceId")
             .IsRequired();
 
             entity
-            .HasOne(e => e.ServicePrice)
+            .HasOne(e => e.Service)
             .WithMany()
-            .HasForeignKey(e => e.ServicePriceId);
+            .HasForeignKey(e => e.ServiceId);
         };
     }
 }

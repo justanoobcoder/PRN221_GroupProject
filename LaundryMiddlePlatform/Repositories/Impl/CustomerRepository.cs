@@ -24,6 +24,4 @@ public class CustomerRepository : ICustomerRepository
     public Customer Create(Customer customer) => CustomerDAO.Instance.Create(customer);
 
     public void Update(Customer customer) => CustomerDAO.Instance.Update(customer);
-
-    public void Delete(int id) => CustomerDAO.Instance.Delete(id);
 }

@@ -49,11 +49,8 @@ namespace BusinessObjects.Migrations
                         .HasColumnName("CreatedAt")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("DeletedAt");
-
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .IsUnicode(false)
                         .HasColumnType("varchar(30)")
@@ -90,7 +87,7 @@ namespace BusinessObjects.Migrations
                     b.ToTable("Customer", (string)null);
                 });
 
-            modelBuilder.Entity("BusinessObjects.ItemType", b =>
+            modelBuilder.Entity("BusinessObjects.Machine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,11 +96,32 @@ namespace BusinessObjects.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Brand")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Brand");
+
+                    b.Property<float>("Capacity")
+                        .HasColumnType("real")
+                        .HasColumnName("Capacity");
+
+                    b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Description");
+
+                    b.Property<bool>("IsAvailable")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasColumnName("IsAvailable")
+                        .HasDefaultValueSql("((1))");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Model");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -111,9 +129,57 @@ namespace BusinessObjects.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Name");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int")
+                        .HasColumnName("StoreId");
+
+                    b.Property<float>("WashTimeInMinute")
+                        .HasColumnType("real")
+                        .HasColumnName("WashTimeInMinute");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ItemType", (string)null);
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("Machine", (string)null);
+                });
+
+            modelBuilder.Entity("BusinessObjects.MachineOrderAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AssignedEndAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("AssignedEndAt");
+
+                    b.Property<DateTime>("AssignedStartAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("AssignedStartAt");
+
+                    b.Property<int>("MachineId")
+                        .HasColumnType("int")
+                        .HasColumnName("MachineId");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("OrderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MachineId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("MachineOrderAssignment", (string)null);
                 });
 
             modelBuilder.Entity("BusinessObjects.Order", b =>
@@ -134,49 +200,42 @@ namespace BusinessObjects.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CustomerId");
 
-                    b.Property<DateTime?>("FinishedAt")
+                    b.Property<DateTime?>("DropOffAt")
                         .HasColumnType("datetime")
-                        .HasColumnName("FinishedAt");
+                        .HasColumnName("DropOffAt");
 
                     b.Property<string>("Note")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Note");
 
-                    b.Property<int>("ServicePriceId")
-                        .HasColumnType("int")
-                        .HasColumnName("ServicePriceId");
+                    b.Property<DateTime?>("PickUpAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("PickUpAt");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int")
+                        .HasColumnName("ServiceId");
+
+                    b.Property<int>("Status")
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
+                        .HasColumnType("int")
                         .HasColumnName("Status");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int")
-                        .HasColumnName("StoreId");
-
-                    b.Property<DateTime?>("TakenAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("TakenAt");
-
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("TotalPrice");
+                        .HasColumnName("TotalCost");
 
-                    b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18, 2)")
+                    b.Property<float>("Weight")
+                        .HasColumnType("real")
                         .HasColumnName("Weight");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ServicePriceId");
-
-                    b.HasIndex("StoreId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Order", (string)null);
                 });
@@ -196,15 +255,19 @@ namespace BusinessObjects.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Description");
 
-                    b.Property<int>("ItemTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("ItemTypeId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Name");
+
+                    b.Property<decimal>("PricePerKg")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("PricePerKg");
+
+                    b.Property<float>("ServiceTimeInHour")
+                        .HasColumnType("real")
+                        .HasColumnName("ServiceTimeInHour");
 
                     b.Property<int>("StoreId")
                         .HasColumnType("int")
@@ -212,51 +275,9 @@ namespace BusinessObjects.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemTypeId");
-
                     b.HasIndex("StoreId");
 
                     b.ToTable("Service", (string)null);
-                });
-
-            modelBuilder.Entity("BusinessObjects.ServicePrice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("MaxWeight")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("MaxWeight");
-
-                    b.Property<decimal>("MinWeight")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("MinWeight");
-
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("Price");
-
-                    b.Property<decimal?>("PricePerUnit")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("PricePerUnit");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int")
-                        .HasColumnName("ServiceId");
-
-                    b.Property<int>("WashTimeInMinute")
-                        .HasColumnType("int")
-                        .HasColumnName("WashTimeInMinute");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("ServicePrice", (string)null);
                 });
 
             modelBuilder.Entity("BusinessObjects.Store", b =>
@@ -274,19 +295,27 @@ namespace BusinessObjects.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("Address");
 
+                    b.Property<string>("AvatarUrl")
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("AvatarUrl");
+
                     b.Property<TimeSpan>("CloseTime")
                         .HasColumnType("time(0)")
                         .HasColumnName("CloseTime");
+
+                    b.Property<string>("CoverUrl")
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("CoverUrl");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasColumnName("CreatedAt")
                         .HasDefaultValueSql("(getdate())");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -295,6 +324,7 @@ namespace BusinessObjects.Migrations
                         .HasColumnName("Description");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .IsUnicode(false)
                         .HasColumnType("varchar(30)")
@@ -312,17 +342,11 @@ namespace BusinessObjects.Migrations
                         .HasColumnName("IsBanned")
                         .HasDefaultValueSql("((0))");
 
-                    b.Property<bool>("IsOpened")
+                    b.Property<bool>("IsOpening")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasColumnName("IsOpened")
+                        .HasColumnName("IsOpening")
                         .HasDefaultValueSql("((0))");
-
-                    b.Property<string>("LogoUrl")
-                        .HasMaxLength(200)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("LogoUrl");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -333,12 +357,6 @@ namespace BusinessObjects.Migrations
                     b.Property<TimeSpan>("OpenTime")
                         .HasColumnType("time(0)")
                         .HasColumnName("OpenTime");
-
-                    b.Property<string>("OwnerName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("OwnerName");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -359,57 +377,32 @@ namespace BusinessObjects.Migrations
                     b.ToTable("Store", (string)null);
                 });
 
-            modelBuilder.Entity("BusinessObjects.WashingMachine", b =>
+            modelBuilder.Entity("BusinessObjects.Machine", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                    b.HasOne("BusinessObjects.Store", null)
+                        .WithMany("Machines")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            modelBuilder.Entity("BusinessObjects.MachineOrderAssignment", b =>
+                {
+                    b.HasOne("BusinessObjects.Machine", "Machine")
+                        .WithMany()
+                        .HasForeignKey("MachineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Brand");
+                    b.HasOne("BusinessObjects.Order", "Order")
+                        .WithOne()
+                        .HasForeignKey("BusinessObjects.MachineOrderAssignment", "OrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("Description");
+                    b.Navigation("Machine");
 
-                    b.Property<bool>("IsAvailable")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasColumnName("IsAvailable")
-                        .HasDefaultValueSql("((1))");
-
-                    b.Property<decimal>("MaxWeight")
-                        .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("MaxWeight");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Model");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Name");
-
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int")
-                        .HasColumnName("StoreId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StoreId");
-
-                    b.ToTable("WashingMachine", (string)null);
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("BusinessObjects.Order", b =>
@@ -420,55 +413,21 @@ namespace BusinessObjects.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BusinessObjects.ServicePrice", "ServicePrice")
+                    b.HasOne("BusinessObjects.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("ServicePriceId")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BusinessObjects.Store", "Store")
-                        .WithMany("Orders")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Customer");
 
-                    b.Navigation("ServicePrice");
-
-                    b.Navigation("Store");
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("BusinessObjects.Service", b =>
                 {
-                    b.HasOne("BusinessObjects.ItemType", "ItemType")
-                        .WithMany()
-                        .HasForeignKey("ItemTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BusinessObjects.Store", null)
                         .WithMany("Services")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ItemType");
-                });
-
-            modelBuilder.Entity("BusinessObjects.ServicePrice", b =>
-                {
-                    b.HasOne("BusinessObjects.Service", null)
-                        .WithMany("ServicePrices")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BusinessObjects.WashingMachine", b =>
-                {
-                    b.HasOne("BusinessObjects.Store", null)
-                        .WithMany("WashingMachines")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -479,18 +438,11 @@ namespace BusinessObjects.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("BusinessObjects.Service", b =>
-                {
-                    b.Navigation("ServicePrices");
-                });
-
             modelBuilder.Entity("BusinessObjects.Store", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Machines");
 
                     b.Navigation("Services");
-
-                    b.Navigation("WashingMachines");
                 });
 #pragma warning restore 612, 618
         }
