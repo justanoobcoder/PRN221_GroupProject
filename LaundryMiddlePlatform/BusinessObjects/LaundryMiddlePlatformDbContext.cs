@@ -39,8 +39,8 @@ public class LaundryMiddlePlatformDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("server=(local);database=LaundryMiddlePlatform;uid=sa;pwd=12345;TrustServerCertificate=True");
-        //optionsBuilder.UseSqlServer(GetConnectionString());
+        //optionsBuilder.UseSqlServer("server=(local);database=LaundryMiddlePlatform;uid=sa;pwd=12345;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer(GetConnectionString());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
