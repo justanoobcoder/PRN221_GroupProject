@@ -1,0 +1,51 @@
+/* Add some basic styling to the table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    /* Style the table header */
+    .table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        text-align: left;
+        padding: 20px; /* Increased padding */
+        border: 1px solid #ddd;
+    }
+
+    /* Style the table rows */
+    .table td {
+        padding: 20px; /* Increased padding */
+        border: 1px solid #ddd;
+        white-space: nowrap; /* Prevent link from breaking into new line */
+    }
+
+    /* Style alternate rows for better readability */
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Style links in the last column */
+    .table td:last-child {
+        white-space: nowrap;
+    }
+
+    .table a {
+        color: #007bff;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+        .table a:hover {
+            text-decoration: underline;
+        }
+
+/* Limit the width of the container and adjust margins */
+.container {
+    max-width: 1200px; /* Adjust the maximum width as needed */
+    margin-left: 20px; /* Narrower left margin */
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
