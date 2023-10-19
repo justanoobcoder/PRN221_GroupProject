@@ -51,6 +51,7 @@ public class StoreDAO
         if (s != null)
         {
             var context = new LaundryMiddlePlatformDbContext();
+            s.Password = BCrypt.Net.BCrypt.HashPassword(s.Password);
             await context.Stores.AddAsync(s);
             await context.SaveChangesAsync();
         }
