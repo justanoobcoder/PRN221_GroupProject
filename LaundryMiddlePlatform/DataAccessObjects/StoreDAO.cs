@@ -77,7 +77,6 @@ public class StoreDAO
         var _store = context.Stores.Find(store.Id);
         if (_store != null)
         {
-            store.Password = BCrypt.Net.BCrypt.HashPassword(store.Password);
             context.Entry(_store).CurrentValues.SetValues(store);
         }
         context.SaveChanges();
