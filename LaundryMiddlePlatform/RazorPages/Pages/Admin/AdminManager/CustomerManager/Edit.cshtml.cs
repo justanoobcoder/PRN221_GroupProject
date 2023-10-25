@@ -37,16 +37,18 @@ namespace RazorPages.Pages.Admin.AdminManager.CustomerManager
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id, string ban)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
 
             try
             {
+                var customer = _repository.GetById(id);
+                Customer = customer;
+                if (ban.Trim().Equals("Ban"))
+                    Customer.IsBanned = true;
+                else
+                    Customer.IsBanned = false;
                 _repository.Update(Customer);
             }
             catch (DbUpdateConcurrencyException)

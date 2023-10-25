@@ -7,9 +7,6 @@
 
 <h1>Store</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -59,56 +56,65 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Store) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvatarUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoverUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FacebookUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CloseTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsOpening)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsBanned)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> 
-                @*<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Store)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvatarUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoverUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacebookUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CloseTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsOpening)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsBanned)
+                </td>
+                <td>
+                    @if (!item.IsBanned)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Chặn</a>
+                    }
+                    else
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Bỏ Chặn</a>
+                    }
+                    |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Chi tiết thông tin cửa hàng.</a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

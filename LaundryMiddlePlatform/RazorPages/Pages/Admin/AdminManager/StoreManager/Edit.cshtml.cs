@@ -27,7 +27,7 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
                 return NotFound();
             }
 
-            var store =  await _repository.GetStoreById(id);
+            var store = await _repository.GetStoreById(id);
             if (store == null)
             {
                 return NotFound();
@@ -38,15 +38,17 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string ban)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
             try
             {
+                var store = await _repository.GetStoreById(id);
+                Store = store;
+                if (ban.Trim().Equals("Ban"))
+                    Store.IsBanned = true;
+                else
+                    Store.IsBanned = false;
                 await _repository.UpdateStore(Store);
             }
             catch (DbUpdateConcurrencyException)
@@ -66,7 +68,7 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
 
         private async Task<bool> StoreExists(int id)
         {
-          return await _repository.CheckIfStoreExist(id);
+            return await _repository.CheckIfStoreExist(id);
         }
     }
 }
