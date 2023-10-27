@@ -84,4 +84,11 @@ public class CustomerDAO
         }
         context.SaveChanges();
     }
+
+    public IQueryable<Customer> GetListCustomersIQ()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var customers = context.Customers;
+        return customers;
+    }
 }

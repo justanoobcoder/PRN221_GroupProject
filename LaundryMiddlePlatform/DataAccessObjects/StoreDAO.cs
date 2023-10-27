@@ -80,4 +80,11 @@ public class StoreDAO
         var result = await context.Stores.AnyAsync(s => s.Id == id);
         return result;
     }
+
+    public async Task<IQueryable<Store>> GetListStoreIQAsync()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var stores = context.Stores;
+        return stores;
+    }
 }

@@ -5,40 +5,52 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Customer</h1>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].FullName)
+                @Html.DisplayNameFor(model => model.Customers[0].FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].Address)
+                @Html.DisplayNameFor(model => model.Customers[0].Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].Phone)
+                @Html.DisplayNameFor(model => model.Customers[0].Phone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].Password)
+                @Html.DisplayNameFor(model => model.Customers[0].Password)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].Email)
+                @Html.DisplayNameFor(model => model.Customers[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].AvatarUrl)
+                @Html.DisplayNameFor(model => model.Customers[0].AvatarUrl)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].CreatedAt)
+                @Html.DisplayNameFor(model => model.Customers[0].CreatedAt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer[0].IsBanned)
+                @Html.DisplayNameFor(model => model.Customers[0].IsBanned)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Customer) {
+@foreach (var item in Model.Customers) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
@@ -81,3 +93,25 @@
 }
     </tbody>
 </table>
+
+
+@{
+    var prevDisabled = !Model.Customers.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Customers.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Customers.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Customers.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

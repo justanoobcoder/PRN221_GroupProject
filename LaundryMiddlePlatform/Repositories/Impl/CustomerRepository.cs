@@ -24,4 +24,9 @@ public class CustomerRepository : ICustomerRepository
     public Customer Create(Customer customer) => CustomerDAO.Instance.Create(customer);
 
     public void Update(Customer customer) => CustomerDAO.Instance.Update(customer);
+
+    public IQueryable<Customer> GetListCustomersIQ()
+    {
+        return CustomerDAO.Instance.GetListCustomersIQ();
+    }
 }

@@ -15,4 +15,5 @@ public interface IStoreRepository
     Task UpdateStore(Store store);
     Task<Store> GetStoreById(int? id);
     Task<bool> CheckIfStoreExist(int? id);
+    Task<IQueryable<Store>> GetListStoresIQ();
 }

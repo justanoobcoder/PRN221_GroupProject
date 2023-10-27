@@ -37,4 +37,9 @@ public class StoreRepository : IStoreRepository
     {
         return await StoreDAO.Instance.CheckIfStoreExistAsync(id);
     }
+
+    public async Task<IQueryable<Store>> GetListStoresIQ()
+    {
+        return await StoreDAO.Instance.GetListStoreIQAsync();
+    }
 }
