@@ -8,7 +8,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-group">
                 <label asp-for="Store.Name" class="control-label"></label>
                 <input asp-for="Store.Name" class="form-control" />
@@ -51,12 +51,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Store.Password" class="control-label"></label>
-                <input asp-for="Store.Password" class="form-control" />
+                <input type="password" asp-for="Store.Password" class="form-control" />
                 @Html.ValidationMessageFor(m => m.Store.Password, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
+                <input type="password" asp-for="ConfirmPassword" class="form-control" />
                 @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
@@ -69,11 +69,11 @@
                 <input asp-for="Store.CloseTime" class="form-control" />
                 @Html.ValidationMessageFor(m => m.Store.CloseTime, "", new { @class = "text-danger" })
             </div>
-            <div >
+            <div>
                 @Html.ValidationMessageFor(m => m.ErrorMessage, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-               
+
                 <button class="btn btn-primary">Register</button>
             </div>
         </form>
