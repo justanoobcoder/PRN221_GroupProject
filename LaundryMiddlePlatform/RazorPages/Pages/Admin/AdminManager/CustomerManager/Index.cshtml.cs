@@ -22,36 +22,42 @@ namespace RazorPages.Pages.Admin.AdminManager.CustomerManager
 
         public string NameSort { get; set; }
         public string DateSort { get; set; }
-        public string CurrentFilter { get; set; }
+        public string CurrentFilter1 { get; set; }
+        public string CurrentFilter2 { get; set; }
         public string CurrentSort { get; set; }
 
         public PaginatedList<BusinessObjects.Customer> Customers { get;set; } = default!;
 
-        public async Task OnGetAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex)
+        public async Task OnGetAsync(string sortOrder, string currentFilter1, string currentFilter2, string dateStart, string dateEnd, int? pageIndex)
         {
             CurrentSort = sortOrder;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
-            if (searchString != null)
+            if (dateStart != null || dateEnd != null)
             {
                 pageIndex = 1;
             }
             else
             {
-                searchString = CurrentFilter;
+                dateStart = CurrentFilter1;
+                dateEnd = CurrentFilter2;
             }
 
-            if (currentFilter != null)
+            if (currentFilter1 != null || currentFilter2 != null)
             {
-                searchString = currentFilter;
+                dateStart = currentFilter1;
+                dateEnd = CurrentFilter2;
             }
-            CurrentFilter = searchString;
+            CurrentFilter1 = dateStart;
+            CurrentFilter2 = dateEnd;
 
             IQueryable<BusinessObjects.Customer> customerIQ = _repository.GetListCustomersIQ();
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(dateStart) || !String.IsNullOrEmpty(dateEnd))
             {
-                customerIQ = customerIQ.Where(s => s.FullName.Contains(searchString));
+                if (String.IsNullOrEmpty(dateStart)) customerIQ = customerIQ.Where(s => s.CreatedAt <= DateTime.Parse(dateEnd.Trim()));
+                else if (String.IsNullOrEmpty(dateEnd)) customerIQ = customerIQ.Where(s => s.CreatedAt >= DateTime.Parse(dateStart.Trim()));
+                else customerIQ = customerIQ.Where(s => s.CreatedAt >= DateTime.Parse(dateStart.Trim()) && s.CreatedAt <= DateTime.Parse(dateEnd.Trim()));
             }
 
             switch (sortOrder)
@@ -70,7 +76,7 @@ namespace RazorPages.Pages.Admin.AdminManager.CustomerManager
                     break;
             }
 
-            var pageSize = Configuration.GetValue("PageSize", 4);
+            var pageSize = Configuration.GetValue("PageSize", 3);
             Customers = PaginatedList<BusinessObjects.Customer>.Create(customerIQ, pageIndex ?? 1, pageSize);
         }
     }
