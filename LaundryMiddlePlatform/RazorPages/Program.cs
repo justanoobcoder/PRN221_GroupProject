@@ -4,12 +4,13 @@ using Repositories.Impl;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddRazorPages().AddNToastNotifyNoty(new NToastNotify.NotyOptions()
-{
-    ProgressBar = true,
-    Timeout = 2000
-});
+builder.Services.AddRazorPages()
+    .AddNToastNotifyNoty(new NToastNotify.NotyOptions()
+    {
+        ProgressBar = true,
+        Timeout = 2000
+    });
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
