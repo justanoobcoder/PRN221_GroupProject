@@ -1,4 +1,81 @@
 ﻿@page
 @model RazorPages.Pages.StoreNamespace.RegisterModel
 @{
+    ViewData["Title"] = "RegisterStore";
 }
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Store.Name" class="control-label"></label>
+                <input asp-for="Store.Name" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.Address" class="control-label"></label>
+                <input asp-for="Store.Address" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.Phone" class="control-label"></label>
+                <input asp-for="Store.Phone" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.Phone, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.Email" class="control-label"></label>
+                <input asp-for="Store.Email" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.Description" class="control-label"></label>
+                <input asp-for="Store.Description" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.Description, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.AvatarUrl" class="control-label"></label>
+                <input asp-for="Store.AvatarUrl" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.AvatarUrl, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.CoverUrl" class="control-label"></label>
+                <input asp-for="Store.CoverUrl" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.CoverUrl, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.FacebookUrl" class="control-label"></label>
+                <input asp-for="Store.FacebookUrl" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.FacebookUrl, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.Password" class="control-label"></label>
+                <input asp-for="Store.Password" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.OpenTime" class="control-label"></label>
+                <input asp-for="Store.OpenTime" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.OpenTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Store.CloseTime" class="control-label"></label>
+                <input asp-for="Store.CloseTime" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Store.CloseTime, "", new { @class = "text-danger" })
+            </div>
+            <div >
+                @Html.ValidationMessageFor(m => m.ErrorMessage, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+               
+                <button class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
