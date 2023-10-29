@@ -77,10 +77,18 @@ public class CustomerDAO
     {
         var context = new LaundryMiddlePlatformDbContext();
         var c = context.Customers.Find(customer.Id);
+        customer.Password = BCrypt.Net.BCrypt.HashPassword(customer.Password);
         if (c != null)
         {
             context.Entry(c).CurrentValues.SetValues(customer);
         }
         context.SaveChanges();
+    }
+
+    public IQueryable<Customer> GetListCustomersIQ()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var customers = context.Customers;
+        return customers;
     }
 }

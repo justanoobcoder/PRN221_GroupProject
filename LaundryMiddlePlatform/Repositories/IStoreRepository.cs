@@ -15,4 +15,10 @@ public interface IStoreRepository
     public Store Create(Store store);
     public Store? GetByPhone(string phone);
     public Store? GetByEmail(string email);
+    Task<List<Store>> GetListStores ();
+    Task AddStore(Store store);
+    Task UpdateStore(Store store);
+    Task<Store> GetStoreById(int? id);
+    Task<bool> CheckIfStoreExist(int? id);
+    Task<IQueryable<Store>> GetListStoresIQ();
 }

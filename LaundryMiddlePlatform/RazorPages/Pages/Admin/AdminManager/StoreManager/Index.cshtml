@@ -1,0 +1,153 @@
+﻿@page
+@model RazorPages.Pages.Admin.AdminManager.StoreManager.IndexModel
+
+@{
+    ViewData["Title"] = "List Store";
+}
+
+<h1>Store</h1>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].AvatarUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].CoverUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].FacebookUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].OpenTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].CloseTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].IsOpening)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores[0].IsBanned)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Stores)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvatarUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoverUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacebookUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CloseTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsOpening)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsBanned)
+                </td>
+                <td>
+                    @if (!item.IsBanned)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Chặn</a>
+                    }
+                    else
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Bỏ Chặn</a>
+                    }
+                    |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Chi tiết thông tin cửa hàng.</a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@{
+    var prevDisabled = !Model.Stores.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Stores.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Stores.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Stores.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

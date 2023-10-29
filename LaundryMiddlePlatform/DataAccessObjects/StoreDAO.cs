@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessObjects;
 
@@ -37,6 +38,7 @@ public class StoreDAO
         }
         return null;
     }
+
     public Store? GetByPhone(string phone)
     {
         var context = new LaundryMiddlePlatformDbContext();
@@ -91,5 +93,54 @@ public class StoreDAO
             context.Remove(store);
             context.SaveChanges();
         }
+    }
+
+    public async Task<List<Store>> GetListStoresAsync()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var stores = await context.Stores.ToListAsync();
+        return stores;
+    }
+
+    public async Task AddStoreAsync(Store s)
+    {
+        if (s != null)
+        {
+            var context = new LaundryMiddlePlatformDbContext();
+            s.Password = BCrypt.Net.BCrypt.HashPassword(s.Password);
+            await context.Stores.AddAsync(s);
+            await context.SaveChangesAsync();
+        }
+    }
+
+    public async Task UpdateStoreAsync(Store s)
+    {
+        if (s != null)
+        {
+            var context = new LaundryMiddlePlatformDbContext();
+            context.Entry(s).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<Store> GetStoreByIdAsync(int? storeId)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var store = await context.Stores.SingleOrDefaultAsync(s => s.Id == storeId);
+        return store;
+    }
+
+    public async Task<bool> CheckIfStoreExistAsync(int? id)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var result = await context.Stores.AnyAsync(s => s.Id == id);
+        return result;
+    }
+
+    public async Task<IQueryable<Store>> GetListStoreIQAsync()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var stores = context.Stores;
+        return stores;
     }
 }
