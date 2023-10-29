@@ -16,4 +16,5 @@ public interface ICustomerRepository
     Customer? GetByEmail(string email);
     Customer Create(Customer customer);
     void Update(Customer customer);
+    IQueryable<Customer> GetListCustomersIQ();
 }

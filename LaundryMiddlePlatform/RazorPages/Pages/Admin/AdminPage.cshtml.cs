@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RazorPages.Pages.CustomerNamespace
+namespace NguyenTienPhatRazorPage.Pages.OptionsPage
 {
-    public class IndexModel : PageModel
+    public class AdminPageModel : PageModel
     {
         public void OnGet()
         {
+
         }
     }
 }

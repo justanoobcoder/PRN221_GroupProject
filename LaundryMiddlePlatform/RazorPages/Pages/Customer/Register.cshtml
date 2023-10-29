@@ -1,4 +1,65 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Razor;
 @model RazorPages.Pages.CustomerNamespace.RegisterModel
 @{
+    ViewData["Title"] = "Register";
+    Layout = "_LoginLayout";
+
+}
+
+<hr />
+<div class="container">
+    <div class="register-page">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Customer.FullName" class="control-label"></label>
+                <input asp-for="Customer.FullName" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Customer.FullName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Email" class="control-label"></label>
+                <input asp-for="Customer.Email" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Customer.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Phone" class="control-label"></label>
+                <input asp-for="Customer.Phone" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Customer.Phone, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Address" class="control-label"></label>
+                <input asp-for="Customer.Address" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Customer.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Password" class="control-label"></label>
+                <input type="password" asp-for="Customer.Password" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Customer.Password, "", new { @class = "text-danger" })
+            </div>            
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.AvatarUrl" class="control-label"></label>
+                <input asp-for="Customer.AvatarUrl" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Customer.AvatarUrl, "", new { @class = "text-danger" })
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-primary">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@await Component.InvokeAsync("NToastNotify");
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

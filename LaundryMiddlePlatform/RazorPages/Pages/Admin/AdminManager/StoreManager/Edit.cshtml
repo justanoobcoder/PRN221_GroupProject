@@ -1,0 +1,49 @@
+﻿@page
+@model RazorPages.Pages.Admin.AdminManager.StoreManager.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+@if (Model.Store.IsBanned)
+{
+    <h1>Bỏ Chặn</h1>
+}
+else
+{
+    <h1>Chặn</h1>
+}
+<h4>Cửa hàng</h4>
+<hr />
+
+
+@if (Model.Store.IsBanned)
+{
+    <h3>Bạn có muốn bỏ chặn cửa hàng này?</h3>
+
+}
+else
+{
+    <h3>Bạn có muốn chặn cửa hàng này?</h3>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Store.Id" />
+    @if (Model.Store.IsBanned)
+    {
+        <input type="hidden" value="Unban" name="ban"/>
+        <input type="submit" value="Bỏ Chặn" class="btn btn-danger" />
+    }
+    else
+    {
+        <input type="hidden" value="Ban" name="ban"/>
+        <input type="submit" value="Chặn" class="btn btn-danger" />
+    }
+    |
+    <a asp-page="./Index">Trở về danh sách cửa hàng.</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
