@@ -82,6 +82,7 @@ public class LoginModel : PageModel
                     Role = Constants.Role.Customer,
                 });
                 return RedirectToPage("/Customer/Index");
+
             }
         }
 

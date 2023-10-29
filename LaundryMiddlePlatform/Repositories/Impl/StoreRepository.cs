@@ -13,6 +13,11 @@ public class StoreRepository : IStoreRepository
     public Store? GetByPhoneAndPassword(string phone, string password)
         => StoreDAO.Instance.GetByPhoneAndPassword(phone, password);
 
+    public Store? GetById(int? id) => StoreDAO.Instance.GetById(id);
+    public void Update(Store store) => StoreDAO.Instance.Update(store);
+    public Store Create(Store store)=>StoreDAO.Instance.Create(store);
+    public Store? GetByPhone(string phone)=>StoreDAO.Instance.GetByPhone(phone);    
+    public Store? GetByEmail(string email)=>StoreDAO.Instance.GetByEmail(email);
     public async Task<List<Store>> GetListStores()
     {
         return await StoreDAO.Instance.GetListStoresAsync();
