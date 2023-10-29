@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObjects;
 using Repositories.Impl;
 using CarRentingManagementLibrary.Pagging;
+using Microsoft.AspNetCore.Html;
 
 namespace RazorPages.Pages.Admin.AdminManager.CustomerManager
 {
+    [BindProperties]
     public class IndexModel : PageModel
     {
         private CustomerRepository _repository = new CustomerRepository();
@@ -25,8 +27,9 @@ namespace RazorPages.Pages.Admin.AdminManager.CustomerManager
         public string CurrentFilter1 { get; set; }
         public string CurrentFilter2 { get; set; }
         public string CurrentSort { get; set; }
+        public string? ErrorMessage { get; set; } = default!;
 
-        public PaginatedList<BusinessObjects.Customer> Customers { get;set; } = default!;
+        public PaginatedList<BusinessObjects.Customer> Customers { get; set; } = default!;
 
         public async Task OnGetAsync(string sortOrder, string currentFilter1, string currentFilter2, string dateStart, string dateEnd, int? pageIndex)
         {
@@ -55,10 +58,20 @@ namespace RazorPages.Pages.Admin.AdminManager.CustomerManager
 
             if (!String.IsNullOrEmpty(dateStart) || !String.IsNullOrEmpty(dateEnd))
             {
+                string errorMessage = "- Ngày bắt đầu phải bé hơn hoặc bằng ngày kết thúc.\n - Ngày bắt đầu và ngày kết thúc phải bé hơn hoặc bằng thời gian hiện tại.";
+                ErrorMessage = errorMessage;
+                if (String.IsNullOrEmpty(dateStart) && !String.IsNullOrEmpty(dateEnd)) { if (DateTime.Parse(dateEnd.Trim()) > DateTime.UtcNow) ModelState.AddModelError(nameof(ErrorMessage), errorMessage); }
+                else if (!String.IsNullOrEmpty(dateStart) && String.IsNullOrEmpty(dateEnd)) { if (DateTime.Parse(dateStart.Trim()) > DateTime.UtcNow) ModelState.AddModelError(nameof(ErrorMessage), errorMessage); }
+                else if (DateTime.Parse(dateEnd.Trim()) < DateTime.Parse(dateStart.Trim())
+                || ((DateTime.Parse(dateEnd.Trim()) > DateTime.UtcNow || DateTime.Parse(dateStart.Trim()) > DateTime.UtcNow)))
+                {
+                    ModelState.AddModelError(nameof(ErrorMessage), errorMessage);
+                }
                 if (String.IsNullOrEmpty(dateStart)) customerIQ = customerIQ.Where(s => s.CreatedAt <= DateTime.Parse(dateEnd.Trim()));
                 else if (String.IsNullOrEmpty(dateEnd)) customerIQ = customerIQ.Where(s => s.CreatedAt >= DateTime.Parse(dateStart.Trim()));
                 else customerIQ = customerIQ.Where(s => s.CreatedAt >= DateTime.Parse(dateStart.Trim()) && s.CreatedAt <= DateTime.Parse(dateEnd.Trim()));
             }
+
 
             switch (sortOrder)
             {

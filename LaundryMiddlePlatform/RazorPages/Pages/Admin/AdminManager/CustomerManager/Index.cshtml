@@ -8,6 +8,10 @@
 <h1>Customer</h1>
 
 <form asp-page="./Index" method="get">
+    <span style="white-space: pre-line">
+        @Html.ValidationMessageFor(m => m.ErrorMessage, "", new { @class = "text-danger" })
+    </span>
+
     <div class="form-actions no-color">
         <p>
             Start Date:

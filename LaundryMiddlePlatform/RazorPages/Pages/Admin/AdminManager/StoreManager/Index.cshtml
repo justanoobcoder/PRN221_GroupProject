@@ -8,14 +8,24 @@
 <h1>Store</h1>
 
 <form asp-page="./Index" method="get">
+    <span style="white-space: pre-line">
+        @Html.ValidationMessageFor(m => m.ErrorMessage, "", new { @class = "text-danger" })
+    </span>
+
     <div class="form-actions no-color">
         <p>
-            Find by name:
-            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-primary" /> |
-            <a asp-page="./Index">Back to full List</a>
+            Start Date:
+            <input type="datetime-local" name="DateStart" value="@Model.CurrentFilter1" />
         </p>
     </div>
+    <div class="form-actions no-color">
+        <p>
+            End Date:
+            <input type="datetime-local" name="DateEnd" value="@Model.CurrentFilter2" />
+        </p>
+    </div>
+    <input type="submit" value="Search" class="btn btn-primary" /> |
+    <a asp-page="./Index">Back to full List</a>
 </form>
 
 <table class="table">
@@ -139,7 +149,8 @@
 <a asp-page="./Index"
    asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.Stores.PageIndex - 1)"
-   asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-currentFilter="@Model.CurrentFilter1"
+   asp-route-currentFilter="@Model.CurrentFilter2"
    class="btn btn-primary @prevDisabled">
     Previous
 </a>
@@ -147,7 +158,8 @@
 <a asp-page="./Index"
    asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.Stores.PageIndex + 1)"
-   asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-currentFilter="@Model.CurrentFilter1"
+   asp-route-currentFilter="@Model.CurrentFilter2"
    class="btn btn-primary @nextDisabled">
     Next
 </a>
