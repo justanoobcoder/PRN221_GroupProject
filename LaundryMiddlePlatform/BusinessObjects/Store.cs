@@ -63,7 +63,7 @@ public class Store
     public TimeSpan CloseTime { get; set; }
 
     [Display(Name = "Đang mở cửa")]
-    public bool IsOpening { get; set; }
+    public bool IsOpening { get; set; } = false;
 
     [Display(Name = "Ngày tạo")]
     [DataType(DataType.DateTime)]

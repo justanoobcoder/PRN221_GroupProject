@@ -37,4 +37,59 @@ public class StoreDAO
         }
         return null;
     }
+    public Store? GetByPhone(string phone)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Stores.SingleOrDefault(s => s.Phone == phone);
+    }
+
+    public Store? GetByEmail(string email)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Stores.SingleOrDefault(s => s.Email == email);
+    }
+
+
+    public IQueryable<Store> GetAll()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Stores;
+    }
+
+    public Store? GetById(int? id)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Stores.Find(id);
+    }
+
+    public Store Create(Store store)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        store.Password = BCrypt.Net.BCrypt.HashPassword(store.Password);
+        context.Stores.Add(store);
+        context.SaveChanges();
+        return store;
+    }
+
+    public void Update(Store store)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var _store = context.Stores.Find(store.Id);
+        if (_store != null)
+        {
+            context.Entry(_store).CurrentValues.SetValues(store);
+        }
+        context.SaveChanges();
+    }
+
+    public void Delete(Store store)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var _store = context.Stores.Find(store.Id);
+        if (_store != null)
+        {
+            context.Remove(store);
+            context.SaveChanges();
+        }
+    }
 }

@@ -1,0 +1,84 @@
+﻿@page
+@model RazorPages.Pages.StoreNamespace.EditStoreModel
+
+@{
+    ViewData["Title"] = "EditStore";
+}
+
+<h1>EditStore</h1>
+
+<h4>Store</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.Name" class="control-label"></label>
+                <input asp-for="UpdateStore.Name" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.Address" class="control-label"></label>
+                <input asp-for="UpdateStore.Address" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.Phone" class="control-label"></label>
+                <input asp-for="UpdateStore.Phone" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.Phone, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.Email" class="control-label"></label>
+                <input asp-for="UpdateStore.Email" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.Description" class="control-label"></label>
+                <input asp-for="UpdateStore.Description" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.Description, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.AvatarUrl" class="control-label"></label>
+                <input asp-for="UpdateStore.AvatarUrl" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.AvatarUrl, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.CoverUrl" class="control-label"></label>
+                <input asp-for="UpdateStore.CoverUrl" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.CoverUrl, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.FacebookUrl" class="control-label"></label>
+                <input asp-for="UpdateStore.FacebookUrl" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.FacebookUrl, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.OpenTime" class="control-label"></label>
+                <input asp-for="UpdateStore.OpenTime" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.OpenTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateStore.CloseTime" class="control-label"></label>
+                <input asp-for="UpdateStore.CloseTime" class="form-control" />
+                @Html.ValidationMessageFor(m => m.UpdateStore.CloseTime, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.ValidationMessageFor(m => m.ErrorMessage, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/Store/Index">Back to Home Page</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
