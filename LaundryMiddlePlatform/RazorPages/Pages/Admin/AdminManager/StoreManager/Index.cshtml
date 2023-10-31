@@ -2,10 +2,21 @@
 @model RazorPages.Pages.Admin.AdminManager.StoreManager.IndexModel
 
 @{
-    ViewData["Title"] = "List Store";
+    ViewData["Title"] = "Danh sách cửa hàng.";
 }
 
-<h1>Store</h1>
+<a asp-page="/Admin/AdminPage">Trở về trang lựa chọn tính năng.</a>
+
+
+<h1>Danh sách cửa hàng</h1>
+
+<p>
+    <a asp-page="Create">Tạo mới cửa hàng</a>
+</p>
+
+<div class="alert alert-success" role="alert">
+    @Model.SuccessMessage
+</div>
 
 <form asp-page="./Index" method="get">
     <span style="white-space: pre-line">
@@ -14,18 +25,18 @@
 
     <div class="form-actions no-color">
         <p>
-            Start Date:
+            Ngày bắt đầu:
             <input type="datetime-local" name="DateStart" value="@Model.CurrentFilter1" />
         </p>
     </div>
     <div class="form-actions no-color">
         <p>
-            End Date:
+            Ngày kết thúc:
             <input type="datetime-local" name="DateEnd" value="@Model.CurrentFilter2" />
         </p>
     </div>
-    <input type="submit" value="Search" class="btn btn-primary" /> |
-    <a asp-page="./Index">Back to full List</a>
+    <input type="submit" value="Tìm kiếm" class="btn btn-primary" /> |
+    <a asp-page="./Index">Xem toàn bộ danh sách.</a>
 </form>
 
 <table class="table">
@@ -54,9 +65,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Stores[0].FacebookUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stores[0].Password)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Stores[0].OpenTime)
@@ -105,9 +113,6 @@
                     @Html.DisplayFor(modelItem => item.FacebookUrl)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.OpenTime)
                 </td>
                 <td>
@@ -152,7 +157,7 @@
    asp-route-currentFilter="@Model.CurrentFilter1"
    asp-route-currentFilter="@Model.CurrentFilter2"
    class="btn btn-primary @prevDisabled">
-    Previous
+    Trước
 </a>
 
 <a asp-page="./Index"
@@ -161,5 +166,5 @@
    asp-route-currentFilter="@Model.CurrentFilter1"
    asp-route-currentFilter="@Model.CurrentFilter2"
    class="btn btn-primary @nextDisabled">
-    Next
+    Sau
 </a>

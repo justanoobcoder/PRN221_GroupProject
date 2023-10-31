@@ -28,6 +28,11 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
         public string CurrentFilter2 { get; set; }
         public string CurrentSort { get; set; }
         public string? ErrorMessage { get; set; } = default!;
+        [TempData]
+        public string SuccessMessage { get; set; }
+        [TempData]
+        public string SuccessMessageCreate { get; set; }
+
 
 
         public PaginatedList<BusinessObjects.Store> Stores { get;set; } = default!;
@@ -90,6 +95,17 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
 
             var pageSize = Configuration.GetValue("PageSize", 4);
             Stores = PaginatedList<BusinessObjects.Store>.Create(storeIQ, pageIndex ?? 1, pageSize);
+            var banned = TempData["Banned"] as bool?;
+            var successMessage = TempData["SuccessMessage"] as string;
+            var successMessageCreate = TempData["SuccessMessageCreate"] as string;
+            if (!string.IsNullOrEmpty(successMessage))
+            {
+                SuccessMessage = successMessage;
+            }
+            if (!string.IsNullOrEmpty(successMessageCreate))
+            {
+                SuccessMessage = successMessageCreate;
+            }
         }
     }
 }

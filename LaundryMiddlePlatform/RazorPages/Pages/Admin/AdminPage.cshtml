@@ -4,19 +4,19 @@
 @{
     ViewData["Title"] = "Admin";
     var user = HttpContext.Session.GetObjectFromJson<CurrentUser>(Constants.SessionKey.CurrentUserKey);
-    string welcomeMessage = $"Welcome, {user.Role}!";
+    string welcomeMessage = $"Xin chào, {user.Role}!";
 }
 
 <p>@welcomeMessage</p>
 
 <div class="text-center">
-    <h1 class="display-4">Choose Options</h1>
+    <h1 class="display-4">Chọn tính năng</h1>
     <div style="align-items: center;">
         <form method="get">
-            <button asp-page="/Admin/AdminManager/StoreManager/Index" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Store Management</button>
-            <button asp-page="/Admin/AdminManager/CustomerManager/Index" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Customer Information Management</button>
+            <button asp-page="/Admin/AdminManager/StoreManager/Index" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Quản lý cửa hàng</button>
+            <button asp-page="/Admin/AdminManager/CustomerManager/Index" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Quản lý thông tin khách hàng</button>
             @*<button asp-page="/Transactions/Index" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Transaction Management</button>*@
-            <button asp-page="/Admin/Logout" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Log out</button>
+            <button asp-page="/Admin/Logout" type="submit" class="btn btn-primary" style="margin-top: 10px;" asp>Đăng xuất</button>
         </form>
     </div>
 </div>

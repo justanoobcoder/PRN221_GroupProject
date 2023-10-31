@@ -19,6 +19,8 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
 
         [BindProperty]
         public BusinessObjects.Store Store { get; set; } = default!;
+        [TempData]
+        public string SuccessMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -45,10 +47,17 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
             {
                 var store = await _repository.GetStoreById(id);
                 Store = store;
-                if (ban.Trim().Equals("Ban"))
+                if (ban.Trim().Equals("Ban")) 
+                {
                     Store.IsBanned = true;
+                    SuccessMessage = "Chặn thành công!";
+                }
+                    
                 else
+                {
                     Store.IsBanned = false;
+                    SuccessMessage = "Bỏ chặn thành công!";
+                }
                 await _repository.UpdateStore(Store);
             }
             catch (DbUpdateConcurrencyException)
@@ -62,7 +71,6 @@ namespace RazorPages.Pages.Admin.AdminManager.StoreManager
                     throw;
                 }
             }
-
             return RedirectToPage("./Index");
         }
 
