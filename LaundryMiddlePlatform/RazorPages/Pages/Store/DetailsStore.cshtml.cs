@@ -18,16 +18,18 @@ namespace RazorPages.Pages.StoreNamespace
     {
         private readonly IStoreRepository storeRepository;
         private readonly IServiceRepository serviceRepository;
-
-        public DetailsStoreModel(IStoreRepository _storeRepository, IServiceRepository _serviceRepository)
+        private readonly IMachineRepository machineRepository;
+        public DetailsStoreModel(IStoreRepository _storeRepository, IServiceRepository _serviceRepository, IMachineRepository _machineRepository)
         {
             storeRepository = _storeRepository;
             serviceRepository = _serviceRepository;
+            machineRepository = _machineRepository;
         }
 
         public BusinessObjects.Store Store { get; set; } = default!;
         public IList<Service> Services { get; set; } = default!;
-
+        public IList<Machine> Machines { get; set; }    
+        public Boolean updateStatus { get; set; } = default;
 
         public IActionResult OnGet(int? id)
         {
@@ -42,6 +44,7 @@ namespace RazorPages.Pages.StoreNamespace
                 {
                     var storeDetails = storeRepository.GetById(currentUser.Id);
                     var serviceList = serviceRepository.GetAllByStoreId(currentUser.Id);
+                    var machineList= machineRepository.GetAllByStoreId(currentUser.Id);
 
                     if (storeDetails != null)
                     {
@@ -52,10 +55,19 @@ namespace RazorPages.Pages.StoreNamespace
                     {
                         Services = (IList<Service>)serviceList;
                     }
-
+                    if(machineList != null)
+                    {
+                        Machines= (IList<Machine>)machineList;
+                    }
                     return Page();
                 }
             }
+            return RedirectToPage("/Login");
+        }
+
+
+       public IActionResult LogOut()
+        {
             return RedirectToPage("/Login");
         }
 

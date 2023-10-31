@@ -30,4 +30,25 @@ public class ServiceDAO
         var context = new LaundryMiddlePlatformDbContext();
         return context.Services.Where(s=>s.StoreId.Equals(id)).ToList();
     }
+
+    public Service Create(Service service)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        context.Services.Add(service);
+        context.SaveChanges();
+        return service;
+    }
+
+    public void Update(Service service)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var _service = context.Services.Find(service.Id);
+        if (_service != null)
+        {
+            context.Entry(_service).CurrentValues.SetValues(service);
+        }
+        context.SaveChanges();
+    }
+
+
 }

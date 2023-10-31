@@ -10,4 +10,7 @@ namespace Repositories;
 public interface IServiceRepository
 {
     public IEnumerable<Service> GetAllByStoreId(int? id);
+
+    public Service Create(Service service);
+    public void Update(Service service);
 }
