@@ -100,7 +100,7 @@
                                 <p class="card-text">@item.Model</p>
                             </div>
                             <div class="card-footer bg-transparent border-secondary">
-                                <a href="#" class="btn btn-outline-secondary">Chỉnh sửa</a>
+                                <a class="btn btn-outline-secondary" asp-page="/Store/MachineManager/EditMachine" asp-route-id="@item.Id">Chỉnh sửa</a>
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                                 <p class="card-text">@item.PricePerKg</p>
                             </div>
                             <div class="card-footer bg-transparent border-secondary">
-                                <a href="#" class="btn btn-outline-secondary">Chỉnh sửa</a>
+                                <a class="btn btn-outline-secondary" asp-page="/Store/ServiceManager/EditService" asp-route-id="@item.Id">Chỉnh sửa</a>
                             </div>
                         </div>
                     </div>

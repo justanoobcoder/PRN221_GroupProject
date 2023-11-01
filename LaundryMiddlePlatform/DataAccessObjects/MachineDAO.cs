@@ -53,7 +53,7 @@ namespace DataAccessObjects
         public void Update(Machine machine)
         {
             var context = new LaundryMiddlePlatformDbContext();
-            var _machine = context.Services.Find(machine.Id);
+            var _machine = context.Machines.Find(machine.Id);
             if (_machine != null)
             {
                 context.Entry(_machine).CurrentValues.SetValues(machine);

@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,13 @@ public class ServiceDAO
         }
         context.SaveChanges();
     }
+    //public void Update(CartoonFilmInformation cartoonFilm)
+    //{
+    //    var context = new CartoonFilm2023DBContext(); ;
+    //    context.Entry<CartoonFilmInformation>(cartoonFilm).State = EntityState.Modified;
+    //    context.SaveChanges();
+    //}
+
     public Service? GetById(int? id)
     {
         var context = new LaundryMiddlePlatformDbContext();
