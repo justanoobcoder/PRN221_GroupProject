@@ -7,12 +7,13 @@
 }
 
 <div class="h-100 d-flex align-items-center justify-content-center">
-    <div class="container-fluid">
+    <div class="container">
 
         <div class="brand-store">
             <img class="cover-img " alt="coverUrl" src=@Model.Store.CoverUrl />
             <img class="avatar-img rounded-circle" alt="avatar" src=@Model.Store.AvatarUrl />
         </div>
+
         <hr />
         <dl class="row">
             <div class="card text-white bg-secondary mb-3">
@@ -23,7 +24,7 @@
                         <div class="store-status">
                             <p>Trạng thái: Đang mở cửa |  Cập nhật: <a class="btn btn-primary" asp-page="/Store/DetailsStore" asp-page-handler="CloseStore">Đóng cửa</a>
                         </div>
-                        
+
                     }
                     else
                     {
@@ -78,7 +79,8 @@
         </dl>
 
         <h3>Danh sách máy giặt</h3>
-        <a href="#" class="btn btn-primary">Tạo mới máy giặt</a>
+        <a asp-page="/Store/MachineManager/CreateMachine" class="btn btn-primary">Tạo mới máy giặt</a>
+        <hr />
         @if (Model.Machines.Count <= 0)
         {
             <h3>Không tồn tại máy giặt nào trong cửa hàng của bạn </h3>
@@ -109,7 +111,8 @@
 
         <h3>Danh sách dịch vụ </h3>
         <br />
-        <a href="#" class="btn btn-primary">Tạo mới dịch vụ</a>
+        <a asp-page="/Store/ServiceManager/CreateService" class="btn btn-primary">Tạo mới dịch vụ</a>
+        <hr />
         @if (Model.Services.Count <= 0)
         {
             <h3>Không tồn tại dịch vụ nào trong cửa hàng của bạn </h3>

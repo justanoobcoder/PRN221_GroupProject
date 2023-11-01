@@ -30,6 +30,17 @@ namespace DataAccessObjects
             var context = new LaundryMiddlePlatformDbContext();
             return context.Machines.Where(s => s.StoreId.Equals(id)).ToList();
         }
+        public Machine? GetById(int? id)
+        {
+            var context = new LaundryMiddlePlatformDbContext();
+            return context.Machines.Find(id);
+        }
+        public Machine? GetByName(string? name)
+        {
+            var context = new LaundryMiddlePlatformDbContext();
+            return context.Machines.SingleOrDefault(m => m.Name.Equals(name));
+        }
+
 
         public Machine Create(Machine machine)
         {
@@ -49,6 +60,8 @@ namespace DataAccessObjects
             }
             context.SaveChanges();
         }
+
+
     }
 
 

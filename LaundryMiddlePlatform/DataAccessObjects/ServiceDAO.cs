@@ -49,6 +49,15 @@ public class ServiceDAO
         }
         context.SaveChanges();
     }
+    public Service? GetById(int? id)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Services.Find(id);
+    }
 
-
+    public Service? GetByName(string? name)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Services.SingleOrDefault(s=>s.Name.Equals(name));
+    }
 }

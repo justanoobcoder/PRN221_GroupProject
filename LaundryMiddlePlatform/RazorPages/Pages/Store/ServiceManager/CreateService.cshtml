@@ -1,53 +1,52 @@
 ﻿@page
-@model RazorPages.Pages.Store.CreateServiceModel
+@model RazorPages.Pages.Store.ServiceManager.CreateServiceModel
 
 @{
     ViewData["Title"] = "CreateService";
 }
 
-<h1>CreateService</h1>
+<h1>Tạo dịch vụ</h1>
 
-<h4>Service</h4>
+<h4>Dịch vụ</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Service.StoreId" type="hidden" />
             <div class="form-group">
                 <label asp-for="Service.Name" class="control-label"></label>
                 <input asp-for="Service.Name" class="form-control" />
-                <span asp-validation-for="Service.Name" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.Service.Name, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="Service.Description" class="control-label"></label>
                 <input asp-for="Service.Description" class="form-control" />
-                <span asp-validation-for="Service.Description" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.Service.Description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="Service.PricePerKg" class="control-label"></label>
                 <input asp-for="Service.PricePerKg" class="form-control" />
-                <span asp-validation-for="Service.PricePerKg" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.Service.PricePerKg, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="Service.ServiceTimeInHour" class="control-label"></label>
                 <input asp-for="Service.ServiceTimeInHour" class="form-control" />
-                <span asp-validation-for="Service.ServiceTimeInHour" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.Service.ServiceTimeInHour, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                <label asp-for="Service.StoreId" class="control-label"></label>
-                <select asp-for="Service.StoreId" class ="form-control" asp-items="ViewBag.StoreId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Tạo" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="/Store/DetailsStore">Trở về trang chính </a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

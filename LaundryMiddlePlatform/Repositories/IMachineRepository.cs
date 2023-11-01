@@ -12,5 +12,7 @@ namespace Repositories
         public IEnumerable<Machine> GetAllByStoreId(int? id);
         public Machine Create(Machine machine);
         public void Update(Machine machine);
+        public Machine? GetById(int? id);
+        public Machine? GetByName(string? name);
     }
 }
