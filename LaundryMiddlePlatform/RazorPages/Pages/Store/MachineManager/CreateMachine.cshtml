@@ -5,57 +5,57 @@
     ViewData["Title"] = "CreateMachine";
     Layout = "_LoginLayout";
 }
+<div class="container">
+    <h1>Tạo máy giặt</h1>
 
-<h1>Tạo máy giặt</h1>
+    <h4>Máy giặt</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Machine.StoreId" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="Machine.Name" class="control-label"></label>
+                    <input asp-for="Machine.Name" class="form-control" />
+                    @Html.ValidationMessageFor(m => m.Machine.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Machine.Description" class="control-label"></label>
+                    <input asp-for="Machine.Description" class="form-control" />
+                    @Html.ValidationMessageFor(m => m.Machine.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Machine.Brand" class="control-label"></label>
+                    <input asp-for="Machine.Brand" class="form-control" />
+                    @Html.ValidationMessageFor(m => m.Machine.Brand, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Machine.Model" class="control-label"></label>
+                    <input asp-for="Machine.Model" class="form-control" />
+                    @Html.ValidationMessageFor(m => m.Machine.Model, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Machine.Capacity" class="control-label"></label>
+                    <input asp-for="Machine.Capacity" class="form-control" type="number" />
+                    @Html.ValidationMessageFor(m => m.Machine.Capacity, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Machine.WashTimeInMinute" class="control-label"></label>
+                    <input asp-for="Machine.WashTimeInMinute" class="form-control type="number" />
+                    @Html.ValidationMessageFor(m => m.Machine.WashTimeInMinute, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Tạo" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
 
-<h4>Máy giặt</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Machine.StoreId" type="hidden" />
-            <div class="form-group">
-                <label asp-for="Machine.Name" class="control-label"></label>
-                <input asp-for="Machine.Name" class="form-control" />
-                @Html.ValidationMessageFor(m => m.Machine.Name, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="Machine.Description" class="control-label"></label>
-                <input asp-for="Machine.Description" class="form-control" />
-                @Html.ValidationMessageFor(m => m.Machine.Description, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="Machine.Brand" class="control-label"></label>
-                <input asp-for="Machine.Brand" class="form-control" />
-                @Html.ValidationMessageFor(m => m.Machine.Brand, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="Machine.Model" class="control-label"></label>
-                <input asp-for="Machine.Model" class="form-control" />
-                @Html.ValidationMessageFor(m => m.Machine.Model, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="Machine.Capacity" class="control-label"></label>
-                <input asp-for="Machine.Capacity" class="form-control" />
-                @Html.ValidationMessageFor(m => m.Machine.Capacity, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="Machine.WashTimeInMinute" class="control-label"></label>
-                <input asp-for="Machine.WashTimeInMinute" class="form-control" />
-                @Html.ValidationMessageFor(m => m.Machine.WashTimeInMinute, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Tạo" class="btn btn-primary" />
-            </div>
-        </form>
+    <div>
+        <a asp-page="/Store/DetailsStore">Trở về trang chính </a>
     </div>
 </div>
-
-<div>
-    <a asp-page="/Store/DetailsStore">Trở về trang chính </a>
-</div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

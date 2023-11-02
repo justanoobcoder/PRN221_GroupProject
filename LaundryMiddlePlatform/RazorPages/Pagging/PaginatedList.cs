@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRentingManagementLibrary.Pagging
@@ -39,6 +40,11 @@ namespace CarRentingManagementLibrary.Pagging
                     (pageIndex - 1) * pageSize)
                 .Take(pageSize).ToList();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
+        }
+
+        public static implicit operator PaginatedList<T>(Store v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

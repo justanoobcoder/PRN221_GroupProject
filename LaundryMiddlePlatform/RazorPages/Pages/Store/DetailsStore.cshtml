@@ -22,14 +22,24 @@
                     @if (Model.Store.IsOpening == true)
                     {
                         <div class="store-status">
-                            <p>Trạng thái: Đang mở cửa |  Cập nhật: <a class="btn btn-primary" asp-page="/Store/DetailsStore" asp-page-handler="CloseStore">Đóng cửa</a>
+                            <p>
+                                Trạng thái: Đang mở cửa
+                            <p />
+                            <form asp-page-handler="close" method="post">
+                                Cập nhật trạng thái: <button class="btn btn-primary">Đóng cửa</button>
+                            </form>
                         </div>
 
                     }
                     else
                     {
                         <div class="store-status">
-                            <p>Trạng thái: Đã đóng cửa <a href="#" class="btn btn-primary">Mở cửa</a></p>
+                            <p>
+                                Trạng thái: Đã đóng cửa
+                            </p>
+                            <form asp-page-handler="open" method="post">
+                                Cập nhật trạng thái: <button class="btn btn-primary">Mở cửa</button>
+                            </form>
                         </div>
                     }
                 </div>
@@ -77,7 +87,8 @@
                 </dt>
                 </di>
         </dl>
-
+        <hr />
+        <a class="btn btn-primary" href="/Store/EditStore">Edit Store</a>
         <h3>Danh sách máy giặt</h3>
         <a asp-page="/Store/MachineManager/CreateMachine" class="btn btn-primary">Tạo mới máy giặt</a>
         <hr />
@@ -138,11 +149,7 @@
                 }
             </div>
         }
+      
     </div>
 </div>
-<div>
-    <br />
-    <br />
 
-    <a asp-page="/Store/Index">Trở về trang chủ</a>
-</div>

@@ -25,12 +25,9 @@ namespace RazorPages.Pages.StoreNamespace
             serviceRepository = _serviceRepository;
             machineRepository = _machineRepository;
         }
-
         public BusinessObjects.Store Store { get; set; } = default!;
         public IList<Service> Services { get; set; } = default!;
-        public IList<Machine> Machines { get; set; }    
-        public Boolean updateStatus { get; set; } = default;
-
+        public IList<Machine> Machines { get; set; }
         public IActionResult OnGet(int? id)
         {
             var currentUser = HttpContext.Session.GetObjectFromJson<CurrentUser>(Constants.SessionKey.CurrentUserKey);
@@ -44,7 +41,7 @@ namespace RazorPages.Pages.StoreNamespace
                 {
                     var storeDetails = storeRepository.GetById(currentUser.Id);
                     var serviceList = serviceRepository.GetAllByStoreId(currentUser.Id);
-                    var machineList= machineRepository.GetAllByStoreId(currentUser.Id);
+                    var machineList = machineRepository.GetAllByStoreId(currentUser.Id);
 
                     if (storeDetails != null)
                     {
@@ -54,10 +51,11 @@ namespace RazorPages.Pages.StoreNamespace
                     if (serviceList != null)
                     {
                         Services = (IList<Service>)serviceList;
+
                     }
-                    if(machineList != null)
+                    if (machineList != null)
                     {
-                        Machines= (IList<Machine>)machineList;
+                        Machines = (IList<Machine>)machineList;
                     }
                     return Page();
                 }
@@ -66,10 +64,30 @@ namespace RazorPages.Pages.StoreNamespace
         }
 
 
-       public IActionResult LogOut()
+        public IActionResult OnPostCloseAsync()
         {
-            return RedirectToPage("/Login");
+            var currentUser = HttpContext.Session.GetObjectFromJson<CurrentUser>(Constants.SessionKey.CurrentUserKey);
+            var store = storeRepository.GetById(currentUser.Id);
+            if (store != null)
+            {
+                Store = store;
+                Store.IsOpening = false;
+            };
+            storeRepository.Update(Store);
+            return RedirectToPage("/Store/DetailsStore");
         }
 
+        public IActionResult OnPostOpenAsync()
+        {
+            var currentUser = HttpContext.Session.GetObjectFromJson<CurrentUser>(Constants.SessionKey.CurrentUserKey);
+            var store = storeRepository.GetById(currentUser.Id);
+            if (store != null)
+            {
+                Store = store;
+                Store.IsOpening = true;
+            };
+            storeRepository.Update(Store);
+            return RedirectToPage("/Store/DetailsStore");
+        }
     }
 }

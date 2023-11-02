@@ -14,6 +14,7 @@ using Repositories.Impl;
 
 namespace RazorPages.Pages.Store.MachineManager
 {
+    [BindProperties]
     public class EditMachineModel : PageModel
     {
         private readonly IMachineRepository _machineRepository;
@@ -23,7 +24,7 @@ namespace RazorPages.Pages.Store.MachineManager
             _machineRepository = machineRepository;
         }
 
-        [BindProperty]
+
         public Machine Machine { get; set; } = default!;
 
         public async Task<IActionResult> OnGet(int? id)
@@ -77,7 +78,19 @@ namespace RazorPages.Pages.Store.MachineManager
 
             return RedirectToPage("/Store/DetailsStore");
         }
+        public IActionResult OnPostCloseAsync()
+        {
+            Machine.IsAvailable = false;
+            _machineRepository.Update(Machine);
+            return RedirectToPage("/Store/MachineManager/EditMachine");
+        }
 
+        public IActionResult OnPostOpenAsync()
+        {
+            Machine.IsAvailable= true;
+            _machineRepository.Update(Machine);
+            return RedirectToPage("/Store/MachineManager/EditMachine");
+        }
 
     }
 }
