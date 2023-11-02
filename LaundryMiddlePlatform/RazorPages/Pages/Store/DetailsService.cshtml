@@ -1,0 +1,73 @@
+﻿@page
+@model RazorPages.Pages.StoreNamespace.DetailsServiceModel
+
+@{
+    ViewData["Title"] = "DetailsService";
+}
+
+
+<h1>Thông tin dịch vụ</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.PricePerKg)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.PricePerKg)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.ServiceTimeInHour)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.ServiceTimeInHour)
+        </dd>
+    </dl>
+</div>
+
+<h4>Thông tin cửa hàng</h4>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.Description)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.Description)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.OpenTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.OpenTime)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.CloseTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.CloseTime)
+    </dd>
+</dl>
+</div>
+
+<div>
+    <a asp-page="./Service" class="btn btn-primary">Trở lại</a>
+</div>

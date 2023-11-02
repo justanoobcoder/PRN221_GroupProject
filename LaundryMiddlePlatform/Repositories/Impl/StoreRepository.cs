@@ -47,4 +47,11 @@ public class StoreRepository : IStoreRepository
     {
         return await StoreDAO.Instance.GetListStoreIQAsync();
     }
+
+    public IQueryable<Store> GetStores() => StoreDAO.Instance.GetStores();
+
+    public Store? GetStoreFacebookUrl(string? fbUrl)
+    {
+        return  StoreDAO.Instance.GetStoreFacebookUrlString(fbUrl);
+    }
 }

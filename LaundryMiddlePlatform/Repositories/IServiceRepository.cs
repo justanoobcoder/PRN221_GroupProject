@@ -9,9 +9,10 @@ namespace Repositories;
 
 public interface IServiceRepository
 {
+    public IQueryable<Service> GetAll();
+    public Service? GetById(int? id);
     public IEnumerable<Service> GetAllByStoreId(int? id);
     public Service Create(Service service);
     public void Update(Service service);
-    public Service? GetById(int? id);
     public Service? GetByName(string? name);
 }
