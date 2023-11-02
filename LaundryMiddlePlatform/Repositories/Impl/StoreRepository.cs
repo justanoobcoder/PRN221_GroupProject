@@ -47,4 +47,6 @@ public class StoreRepository : IStoreRepository
     {
         return await StoreDAO.Instance.GetListStoreIQAsync();
     }
+    public IQueryable<Store> GetStores() => StoreDAO.Instance.GetStores();
+
 }

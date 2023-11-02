@@ -81,7 +81,8 @@ public class LoginModel : PageModel
                     Name = customer.FullName,
                     Role = Constants.Role.Customer,
                 });
-                return RedirectToPage("/Customer/Index");
+                //return RedirectToPage("/Customer/Index");
+                return RedirectToPage("/Store/Service");
 
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,4 +9,7 @@ namespace Repositories;
 
 public interface IServiceRepository
 {
+    public IQueryable<Service> GetAll();
+    public Service? GetById(int? id);
+
 }

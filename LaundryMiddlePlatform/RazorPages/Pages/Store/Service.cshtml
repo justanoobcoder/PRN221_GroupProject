@@ -1,0 +1,88 @@
+﻿@page
+@model  RazorPages.Pages.StoreNamespace.ServiceModel
+
+@{
+    ViewData["Title"] = "Service";
+}
+
+<h1>Service</h1>
+
+
+
+<form asp-page="./Service" method="get">
+    <label>Search:</label>
+    <input type="search" name="SearchString" value="@Model.CurrentFilter">
+    <input type="submit" value="Search" class="btn btn-primary">
+</form>
+<br></br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Service" asp-route-sortService="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Service[0].Name)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Description)
+            </th>
+            <th>
+                <a asp-page="./Service" asp-route-sortServices="@Model.PriceSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Service[0].PricePerKg)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].ServiceTimeInHour)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Service)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerKg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceTimeInHour)
+                </td>
+                <td>
+                    <a asp-page="./DetailsService" asp-route-id="@item.Id" class="btn btn-primary" >Details</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+@{
+    var preDisable = !Model.Service.HasPreviousPage ? "disabled" : "";
+    var nextDisable = !Model.Service.HasNextPage ? "disabled" : "";
+}
+<a asp- asp-page="./Service"
+   asp-route-sortService="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Service.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @preDisable">
+    Previous
+</a>
+<a asp- asp-page="./Service"
+   asp-route-sortService="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Service.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisable">
+    Next
+</a>
+</div>
+</br>
+<div>
+    <a asp-page="./Index" class="btn btn-primary">Trở lại</a>
+</div>

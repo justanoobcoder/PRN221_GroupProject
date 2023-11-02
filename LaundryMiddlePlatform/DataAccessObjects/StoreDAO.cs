@@ -143,4 +143,11 @@ public class StoreDAO
         var stores = context.Stores;
         return stores;
     }
+    public IQueryable<Store> GetStores()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var stores = context.Stores;
+        return stores;
+    }
+
 }

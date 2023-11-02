@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,15 @@ public class ServiceDAO
                 return _instance;
             }
         }
+    }
+    public IQueryable<Service> GetAll()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Services;
+    }
+    public Service? GetById(int? id)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Services.Find(id);
     }
 }
