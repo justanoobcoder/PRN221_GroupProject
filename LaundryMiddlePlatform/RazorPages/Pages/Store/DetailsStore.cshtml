@@ -1,0 +1,155 @@
+﻿@page
+@model RazorPages.Pages.StoreNamespace.DetailsStoreModel
+
+@{
+    ViewData["Title"] = "DetailsStore";
+    Layout = "_LoginLayout";
+}
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="container">
+
+        <div class="brand-store">
+            <img class="cover-img " alt="coverUrl" src=@Model.Store.CoverUrl />
+            <img class="avatar-img rounded-circle" alt="avatar" src=@Model.Store.AvatarUrl />
+        </div>
+
+        <hr />
+        <dl class="row">
+            <div class="card text-white bg-secondary mb-3">
+                <h2 class="title-brand">Store @Model.Store.Name</h2>
+                <div>
+                    @if (Model.Store.IsOpening == true)
+                    {
+                        <div class="store-status">
+                            <p>
+                                Trạng thái: Đang mở cửa
+                            <p />
+                            <form asp-page-handler="close" method="post">
+                                Cập nhật trạng thái: <button class="btn btn-primary">Đóng cửa</button>
+                            </form>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="store-status">
+                            <p>
+                                Trạng thái: Đã đóng cửa
+                            </p>
+                            <form asp-page-handler="open" method="post">
+                                Cập nhật trạng thái: <button class="btn btn-primary">Mở cửa</button>
+                            </form>
+                        </div>
+                    }
+                </div>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.Address)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.Address)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.Phone)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.Phone)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.FacebookUrl)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.FacebookUrl)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.OpenTime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.OpenTime)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Store.CloseTime)
+                </dt>
+                <dt class="col-sm-10">
+                    @Html.DisplayFor(model => model.Store.CloseTime)
+                </dt>
+                </di>
+        </dl>
+        <hr />
+        <a class="btn btn-primary" href="/Store/EditStore">Edit Store</a>
+        <h3>Danh sách máy giặt</h3>
+        <a asp-page="/Store/MachineManager/CreateMachine" class="btn btn-primary">Tạo mới máy giặt</a>
+        <hr />
+        @if (Model.Machines.Count <= 0)
+        {
+            <h3>Không tồn tại máy giặt nào trong cửa hàng của bạn </h3>
+        }
+        else
+        {
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                @foreach (var item in Model.Machines)
+                {
+                    <div class="col">
+                        <div class="card border-secondary ">
+                            <div class="card-header bg-transparent border-secondary">Máy giặt </div>
+                            <div class="card-body text-secondary">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text">@item.Brand</p>
+                                <p class="card-text">@item.Capacity</p>
+                                <p class="card-text">@item.Model</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-secondary">
+                                <a class="btn btn-outline-secondary" asp-page="/Store/MachineManager/EditMachine" asp-route-id="@item.Id">Chỉnh sửa</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+
+        <h3>Danh sách dịch vụ </h3>
+        <br />
+        <a asp-page="/Store/ServiceManager/CreateService" class="btn btn-primary">Tạo mới dịch vụ</a>
+        <hr />
+        @if (Model.Services.Count <= 0)
+        {
+            <h3>Không tồn tại dịch vụ nào trong cửa hàng của bạn </h3>
+        }
+        else
+        {
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                @foreach (var item in Model.Services)
+                {
+                    <div class="col">
+                        <div class="card border-secondary ">
+                            <div class="card-header bg-transparent border-secondary">Dịch vụ </div>
+                            <div class="card-body text-secondary">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text">@item.Description</p>
+                                <p class="card-text">@item.PricePerKg</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-secondary">
+                                <a class="btn btn-outline-secondary" asp-page="/Store/ServiceManager/EditService" asp-route-id="@item.Id">Chỉnh sửa</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+      
+    </div>
+</div>
+
