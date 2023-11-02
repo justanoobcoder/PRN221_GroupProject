@@ -143,6 +143,7 @@ public class StoreDAO
         var stores = context.Stores;
         return stores;
     }
+
     public IQueryable<Store> GetStores()
     {
         var context = new LaundryMiddlePlatformDbContext();
@@ -150,4 +151,10 @@ public class StoreDAO
         return stores;
     }
 
+    public Store? GetStoreFacebookUrlString(string? fbUrl)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        var result =  context.Stores.FirstOrDefault(s => s.FacebookUrl.Equals(fbUrl.Trim()));
+        return result;
+    }
 }
