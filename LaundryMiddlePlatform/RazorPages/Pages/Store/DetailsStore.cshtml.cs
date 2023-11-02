@@ -28,6 +28,7 @@ namespace RazorPages.Pages.StoreNamespace
         public BusinessObjects.Store Store { get; set; } = default!;
         public IList<Service> Services { get; set; } = default!;
         public IList<Machine> Machines { get; set; }
+        public Machine Machine { get; set; }
         public IActionResult OnGet(int? id)
         {
             var currentUser = HttpContext.Session.GetObjectFromJson<CurrentUser>(Constants.SessionKey.CurrentUserKey);
@@ -87,6 +88,30 @@ namespace RazorPages.Pages.StoreNamespace
                 Store.IsOpening = true;
             };
             storeRepository.Update(Store);
+            return RedirectToPage("/Store/DetailsStore");
+        }
+
+        public IActionResult OnPostStopAsync(int id)
+        {
+            var machine = machineRepository.GetById(id);
+            if (machine == null)
+            {
+                return NotFound();
+            }
+            machine.IsAvailable = false;
+            machineRepository.Update(machine);  
+            return RedirectToPage("/Store/DetailsStore");
+        }
+
+        public IActionResult OnPostRunAsync(int id)
+        {
+            var machine = machineRepository.GetById(id);
+            if (machine == null)
+            {
+                return NotFound();
+            }
+            machine.IsAvailable = true;
+            machineRepository.Update(machine);
             return RedirectToPage("/Store/DetailsStore");
         }
     }

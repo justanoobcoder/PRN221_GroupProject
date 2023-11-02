@@ -109,6 +109,20 @@
                                 <p class="card-text">@item.Brand</p>
                                 <p class="card-text">@item.Capacity</p>
                                 <p class="card-text">@item.Model</p>
+                                @if (item.IsAvailable == true)
+                                {
+                                    <p class="card-text">Đang có sẵn</p>
+                                    <form  asp-page-handler="stop" asp-route-id="@item.Id" method="post">
+                                        Cập nhật: <button class="btn btn-outline-secondary">Đang bận</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <p class="card-text">Đang bận</p>
+                                    <form asp-page-handler="run" asp-route-id="@item.Id" method="post">
+                                        Cập nhật: <button class="btn btn-outline-secondary">Đang có sẵn</button>
+                                    </form>
+                                }
                             </div>
                             <div class="card-footer bg-transparent border-secondary">
                                 <a class="btn btn-outline-secondary" asp-page="/Store/MachineManager/EditMachine" asp-route-id="@item.Id">Chỉnh sửa</a>
