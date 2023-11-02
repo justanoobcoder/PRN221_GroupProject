@@ -68,6 +68,7 @@ public class ServiceDAO
         var context = new LaundryMiddlePlatformDbContext();
         return context.Services.SingleOrDefault(s=>s.Name.Equals(name));
     }
+
     public IQueryable<Service> GetAll()
     {
         var context = new LaundryMiddlePlatformDbContext();
