@@ -49,7 +49,7 @@ namespace RazorPages.Pages.StoreNamespace
             }
             CurrentFilter = searchString;
 
-            IQueryable<BusinessObjects.Store> storeIQ = await _repository.GetListStoresIQ();
+            IQueryable<BusinessObjects.Store> storeIQ = _repository.GetListStoresNotBanIQ();
 
             if (!String.IsNullOrEmpty(searchString))
             {

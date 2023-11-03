@@ -22,4 +22,5 @@ public interface IStoreRepository
     Task<bool> CheckIfStoreExist(int? id);
     Task<IQueryable<Store>> GetListStoresIQ();
     Store? GetStoreFacebookUrl(string? fbUrl);
+    IQueryable<Store> GetListStoresNotBanIQ();
 }

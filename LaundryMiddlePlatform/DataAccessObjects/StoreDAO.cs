@@ -150,4 +150,10 @@ public class StoreDAO
         var result =  context.Stores.FirstOrDefault(s => s.FacebookUrl.Equals(fbUrl.Trim()));
         return result;
     }
+
+    public IQueryable<Store> GetAllStoreNotBanIQ()
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        return context.Stores.Where(s => s.IsBanned == false);
+    }
 }

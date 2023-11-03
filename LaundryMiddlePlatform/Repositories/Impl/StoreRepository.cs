@@ -52,4 +52,9 @@ public class StoreRepository : IStoreRepository
     {
         return  StoreDAO.Instance.GetStoreFacebookUrlString(fbUrl);
     }
+
+    public IQueryable<Store> GetListStoresNotBanIQ()
+    {
+        return StoreDAO.Instance.GetAllStoreNotBanIQ();
+    }
 }
