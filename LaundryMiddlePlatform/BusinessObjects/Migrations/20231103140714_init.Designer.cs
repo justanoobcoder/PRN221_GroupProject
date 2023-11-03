@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObjects.Migrations
 {
     [DbContext(typeof(LaundryMiddlePlatformDbContext))]
-    [Migration("20231018022316_init")]
+    [Migration("20231103140714_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -108,6 +108,10 @@ namespace BusinessObjects.Migrations
                     b.Property<float>("Capacity")
                         .HasColumnType("real")
                         .HasColumnName("Capacity");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -251,6 +255,10 @@ namespace BusinessObjects.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
                         .IsRequired()

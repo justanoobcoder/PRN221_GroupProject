@@ -159,6 +159,10 @@ public class LaundryMiddlePlatformDbContext : DbContext
             entity.Property(e => e.StoreId)
             .HasColumnName("StoreId")
             .IsRequired();
+
+            entity.Property(e => e.DeletedAt)
+            .HasColumnName("DeletedAt")
+            .HasColumnType("datetime");
         };
     }
 
@@ -238,6 +242,10 @@ public class LaundryMiddlePlatformDbContext : DbContext
             entity.Property(e => e.StoreId)
             .HasColumnName("StoreId")
             .IsRequired();
+
+            entity.Property(e => e.DeletedAt)
+            .HasColumnName("DeletedAt")
+            .HasColumnType("datetime");
         };
     }
 

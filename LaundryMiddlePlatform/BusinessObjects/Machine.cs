@@ -46,4 +46,6 @@ public class Machine
     public float WashTimeInMinute { get; set; }
 
     public int StoreId { get; set; }
+
+    public DateTime DeletedAt { get; set; }
 }

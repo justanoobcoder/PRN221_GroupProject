@@ -70,7 +70,8 @@ namespace BusinessObjects.Migrations
                     Capacity = table.Column<float>(type: "real", nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "((1))"),
                     WashTimeInMinute = table.Column<float>(type: "real", nullable: false),
-                    StoreId = table.Column<int>(type: "int", nullable: false)
+                    StoreId = table.Column<int>(type: "int", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,7 +94,8 @@ namespace BusinessObjects.Migrations
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PricePerKg = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ServiceTimeInHour = table.Column<float>(type: "real", nullable: false),
-                    StoreId = table.Column<int>(type: "int", nullable: false)
+                    StoreId = table.Column<int>(type: "int", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {

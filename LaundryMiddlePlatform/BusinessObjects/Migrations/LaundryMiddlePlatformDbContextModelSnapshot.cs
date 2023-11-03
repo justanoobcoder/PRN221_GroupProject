@@ -106,6 +106,10 @@ namespace BusinessObjects.Migrations
                         .HasColumnType("real")
                         .HasColumnName("Capacity");
 
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
+
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
@@ -248,6 +252,10 @@ namespace BusinessObjects.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
                         .IsRequired()

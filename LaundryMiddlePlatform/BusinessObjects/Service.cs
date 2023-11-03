@@ -34,4 +34,6 @@ public class Service
     public float ServiceTimeInHour { get; set; }
 
     public int StoreId { get; set; }
+
+    public DateTime DeletedAt { get; set; }
 }
