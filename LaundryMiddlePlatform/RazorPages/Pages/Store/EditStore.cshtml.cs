@@ -125,7 +125,7 @@ namespace RazorPages.Pages.StoreNamespace
             _storeRepository.Update(Store);
 
             //Return Page
-            return RedirectToPage("/Store/Index");
+            return RedirectToPage("/Store/DetailsStore");
         }
 
     }
