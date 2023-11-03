@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ using System.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarRentingManagementLibrary.Pagging;
 
-namespace RazorPages.Pages.StoreNamespace
+namespace RazorPages.Pages.StoreNamespace.ServiceManager
 {
     public class ServiceModel : PageModel
     {

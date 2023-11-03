@@ -9,7 +9,7 @@ using BusinessObjects;
 using Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace RazorPages.Pages.StoreNamespace
+namespace RazorPages.Pages.StoreNamespace.ServiceManager
 {
     public class DetailsServiceModel : PageModel
     {
