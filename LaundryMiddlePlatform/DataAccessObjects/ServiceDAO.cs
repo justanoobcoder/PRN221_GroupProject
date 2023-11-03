@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,24 @@ public class ServiceDAO
                 return _instance;
             }
         }
+    }
+
+    public List<Service> GetListServices(int? id)
+    {
+        var context = new LaundryMiddlePlatformDbContext();
+        List<Service> services;
+
+        if (id != null)
+        {
+            // Filter services by StoreId if id is not null
+            services = context.Services.Where(s => s.StoreId == id.Value).ToList();
+        }
+        else
+        {
+            // If id is null, fetch all services
+            services = context.Services.ToList();
+        }
+
+        return services;
     }
 }

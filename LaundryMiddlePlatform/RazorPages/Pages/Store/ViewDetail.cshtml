@@ -1,0 +1,77 @@
+﻿@page
+@model RazorPages.Pages.Store.ViewDetailModel
+
+@{
+    ViewData["Title"] = "ViewDetail";
+    Layout = "_ViewStoreLayout";
+}
+
+
+
+<!-- //inner banner -->
+<!-- about section -->
+<section class="w3l-about-2 py-5">
+    <div class="container py-lg-5 py-md-4 py-2">
+        <div class="row justify-content-between align-items-center pb-lg-5">
+            <div class="col-lg-6 about-2-secs-right mb-lg-0 mb-5">
+                <div class="image-box inverse position-relative">
+                    <div class="image-box__static">
+                        <img src="/image/laundry-store.jpg" alt="" width="364" height="459">
+                    </div>
+                    <div class="image-box__float">
+                        <img src="/image/laundry-store.jpg" alt="" width="364" height="459">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 about-2-secs-left ps-lg-5 mt-lg-4 mt-5">
+                <h5 class="sub-title">
+                    <i class="fa fa-home"></i>
+                    @Html.DisplayFor(model => model.Store.Name)
+                </h5>
+                <p class="mt-4">
+                    <i class="fas fa-bars"></i>
+                    @Html.DisplayFor(model => model.Store.Description)
+                </p>
+                <ul class="mt-4 list-style-lis">
+                    <li><i class="fas fa-location-arrow"></i>@Html.DisplayFor(model => model.Store.Address)</li>
+                    <li><i class="fa fa-phone"></i>@Html.DisplayFor(model => model.Store.Phone)</li>
+                    <li><i class="fas fa-envelope"></i>@Html.DisplayFor(model => model.Store.Email)</li>
+                    <li><i class="fas fa-clock"></i>@Html.DisplayFor(model => model.Store.OpenTime)</li>
+                    <li><i class="fas fa-clock"></i>@Html.DisplayFor(model => model.Store.CloseTime)</li>
+                    
+                    @if (Model.IsOpening)
+                    {
+                        <li><i class="fas fa-toggle-on"></i>@Html.DisplayName("Đang mở cửa")</li>
+                        <br />
+                    }
+                    else
+                    {
+                        <li><i class="fas fa-toggle-on"></i>@Html.DisplayName("Đã đóng cửa")</li>
+                        <br/>
+                    }
+                </ul>
+                @if (Model.Services.Count >= 1)
+                {
+                    <h3 class="sub-title">Dịch vụ của cửa hàng:</h3>
+                    <ul class="mt-4 list-style-lis">
+                        @foreach (var item in Model.Services)
+                        {
+                            <li><i class="fas fa-check-circle"></i>@Html.DisplayFor(modelItem => item.Name)</li>
+                            <li><b>Mô tả:</b> @Html.DisplayFor(modelItem => item.Description)</li>
+                            <li><b>Giá tiền trên kg:</b> @Html.DisplayFor(modelItem => item.PricePerKg)</li>
+                            <li><b>Thời gian hoàn thành dịch vụ dự kiến:</b> @Html.DisplayFor(modelItem => item.ServiceTimeInHour)</li>
+                        }
+                    </ul>
+                }
+                <div class="col-md-6">
+                    <form asp-page="/Store/Index" method="GET" class="d-flex search-header">
+                        <input class="form-control me-2" type="hidden" placeholder="Nhập từ khóa..." aria-label="Tìm kiếm" required name="SearchString">
+                        <button class="btn btn-primary" type="submit" class="btn btn-style mt-5">Trở về danh sách ban đầu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //about section -->
+<!-- stats section -->

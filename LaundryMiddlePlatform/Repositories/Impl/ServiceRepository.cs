@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessObjects;
+using DataAccessObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,4 +10,8 @@ namespace Repositories.Impl;
 
 public class ServiceRepository : IServiceRepository
 {
+    public List<Service> GetListServices(int? id)
+    {
+        return ServiceDAO.Instance.GetListServices(id);
+    }
 }

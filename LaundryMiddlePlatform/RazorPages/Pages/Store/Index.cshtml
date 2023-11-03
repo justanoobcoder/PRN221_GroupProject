@@ -1,7 +1,85 @@
 ﻿@page
 @model RazorPages.Pages.StoreNamespace.IndexModel
 @{
+    ViewData["Title"] = "ViewStore";
+    Layout = "_ViewStoreLayout";
 }
 
 
-<a href="/Store/EditStore">Edit Store</a>
+
+<div class="w3l-grids-block-5 pb-5 pt-md-2 pt-4">
+    <div class="container pb-lg-5 pb-md-4 pb-2">
+        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+            <h5 class="sub-title">Những gì chúng tôi cung cấp</h5>
+            <h3 class="title-style">Cửa hàng của chúng tôi</h3>
+        </div>
+        <div class="row text-center justify-content-center">
+            @foreach (var item in Model.Stores)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="image/laundry-store.jpg" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a asp-page="./ViewDetail" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></h4>
+                            <p>
+                                <span style="white-space: pre-line">
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                    @if (item.IsOpening)
+                                    {
+                                        @Html.DisplayName("Đang mở cửa")
+                                        ;
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayName("Đã đóng cửa")
+                                        ;
+                                    }
+                                </span>
+                            </p>
+                            <a class="btn btn-style mt-4" asp-page="./ViewDetail" asp-route-id="@item.Id">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@{
+    var prevDisabled = !Model.Stores.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Stores.HasNextPage ? "disabled" : "";
+}
+
+<div class="container text-center mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.Stores.PageIndex - 1)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               class="btn btn-primary @prevDisabled">
+                Trước
+            </a>
+        </div>
+        <div class="col-md-6">
+            <form asp-page="/Pages/Store/Index" method="GET" class="d-flex search-header">
+                <input class="form-control me-2" type="hidden" placeholder="Nhập từ khóa..." aria-label="Tìm kiếm" required name="SearchString">
+                <button class="btn btn-primary" type="submit">Trở về danh sách ban đầu</button>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.Stores.PageIndex + 1)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               class="btn btn-primary @nextDisabled">
+                Sau
+            </a>
+        </div>
+    </div>
+</div>
+

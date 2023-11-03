@@ -31,7 +31,7 @@ public class LoginModel : PageModel
             if (currentUser.Role == Constants.Role.Admin)
                 return RedirectToPage("/Admin/AdminPage");
             else if (currentUser.Role == Constants.Role.Customer)
-                return RedirectToPage("/Customer/Index");
+                return RedirectToPage("/Store/Index");
             else if (currentUser.Role == Constants.Role.Store)
                 return RedirectToPage("/Store/Index");
             else return RedirectToPage("/Login");
@@ -81,7 +81,7 @@ public class LoginModel : PageModel
                     Name = customer.FullName,
                     Role = Constants.Role.Customer,
                 });
-                return RedirectToPage("/Customer/Index");
+                return RedirectToPage("/Store/Index");
 
             }
         }
