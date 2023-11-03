@@ -1,0 +1,122 @@
+﻿@page
+@model RazorPages.Pages.StoreNamespace.DetailsServiceModel
+
+@{
+    ViewData["Title"] = "DetailsService";
+}
+
+
+<div class="row row-cols-1 row-cols-md-1 row-cols-xl-1 g-12" style="margin-top: 10px; margin-left: 20px;">
+    <div class="col">
+        <div class="card border-secondary ">
+            <div class="card-header bg-transparent border-secondary" style="text-align:center">Thông Tin Dịch Vụ </div>
+            <div class="card-body text-secondary">
+                <h5 style="text-align:center">@Model.Service.Name</h5>
+                <p>Mô tả: @Model.Service.Description</p>
+                <p>Gía tiền: @Model.Service.PricePerKg</p>
+                <p>Thời dành của dịch vụ: @Model.Service.ServiceTimeInHour h</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-1 row-cols-xl-1 g-12" style="margin-top: 10px; margin-left: 20px;">
+    <div class="col">
+        <div class="card border-secondary ">
+            <div class="card-header bg-transparent border-secondary" style="text-align:center; font-weight:bold">Thông Tin Cửa Hàng </div>
+            <div class="card-body text-secondary">
+               <h5 style="text-align:center"> @Model.Store.Name</h5>
+                <p>Mô tả: @Model.Store.Description</p>
+                <p>Thời gian mở cửa: @Model.Store.OpenTime</p>
+                <p>Thời gian đóng cửa: @Model.Store.CloseTime</p>
+                @if(Model.Store.IsOpening == true)
+                {
+                    <span >Trạng thái cửa hàng:</span>
+
+                    <span style="color:green"> Đang mở cửa</span><br>
+                }
+                else
+                {
+                    <span >Trạng thái cửa hàng:</span>
+                    <span style=" color:red"> Đang đóng cửa</span><br>
+
+                }
+                <p><h5 class="card-title">Thông tin liên hệ:</h5></p>
+                <p>Số điện thoại: @Model.Store.Phone</p>
+                <p>Email: @Model.Store.Email</p>
+                <p>Facebook: <a href="@Model.Store.FacebookUrl">@Model.Store.FacebookUrl</a></p>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@* <h1>Thông tin dịch vụ</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.PricePerKg)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.PricePerKg)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Service.ServiceTimeInHour)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Service.ServiceTimeInHour)
+        </dd>
+    </dl>
+</div>
+ *@
+@* <h4>Thông tin cửa hàng</h4>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.Description)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.Description)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.OpenTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.OpenTime)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Store.CloseTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Store.CloseTime)
+    </dd>
+</dl>
+</div> *@
+
+<div style="margin-top: 10px;">
+    <a asp-page="./Service" class="btn btn-primary">Trở lại</a>
+</div>
